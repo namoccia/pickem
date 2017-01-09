@@ -1,6 +1,10 @@
 package com.feedthewolf.nhlpickem;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +58,9 @@ public class GameAdapter extends BaseAdapter {
         // Get home element
         TextView homeTextView = (TextView) rowView.findViewById(R.id.game_list_home_text);
 
+        // Get score element
+        TextView scoreTextView = (TextView) rowView.findViewById(R.id.game_list_score_text);
+
         // Get time element
         TextView timeTextView = (TextView) rowView.findViewById(R.id.game_list_time_text);
 
@@ -66,13 +70,10 @@ public class GameAdapter extends BaseAdapter {
 
         Game game = (Game) getItem(position);
 
-        SimpleDateFormat df = new SimpleDateFormat("h:mm a");
-        String timeString = df.format(game.getDate());
-        //test.
-
         awayTextView.setText(game.getAwayTeam().toString());
         homeTextView.setText(game.getHomeTeam().toString());
-        timeTextView.setText(timeString);
+        scoreTextView.setText(scoreText(game));
+        timeTextView.setText(timeText(game));
         awayLogo.setImageResource(getImageResourceIdByTeamId(game.getAwayTeam().getId()));
         homeLogo.setImageResource(getImageResourceIdByTeamId(game.getHomeTeam().getId()));
 
@@ -144,5 +145,43 @@ public class GameAdapter extends BaseAdapter {
             default:
                 return R.drawable.ic_team_wild;
         }
+    }
+
+    public String timeText(Game game) {
+        String output = "";
+
+        // if game date is in the future then show the game time
+        if (game.getDate().compareTo(new Date()) > 0) {
+            SimpleDateFormat df = new SimpleDateFormat("h:mm a");
+            output = df.format(game.getDate());
+        }
+        else {
+            output = "Final";
+        }
+
+        return output;
+    }
+
+    public SpannableString scoreText(Game game) {
+        SpannableString output = new SpannableString("");
+
+        // if game date is in the future then show no score
+        if (game.getDate().compareTo(new Date()) > 0) {
+            return output;
+        }
+        else {
+            SpannableString str = new SpannableString(String.format("%d\n%d", game.getAwayTeam().getScore(), game.getHomeTeam().getScore()));
+
+            if (game.getAwayTeam().getScore() > game.getHomeTeam().getScore()) {
+                str.setSpan(new StyleSpan(Typeface.BOLD), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            else if (game.getAwayTeam().getScore() < game.getHomeTeam().getScore()) {
+                str.setSpan(new StyleSpan(Typeface.BOLD), 2, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            output = str;
+        }
+
+        return output;
     }
 }

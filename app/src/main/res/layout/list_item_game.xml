@@ -92,6 +92,18 @@
             android:layout_marginRight="15dp"
             />
 
+        <TextView
+            android:id="@+id/game_list_score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:lineSpacingMultiplier="1.3"
+            tools:text="ScoreText"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/game_list_time_text"
+            />
+
     </RelativeLayout>
 
 

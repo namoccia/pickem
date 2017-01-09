@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //currentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
         Date date = new Date();
+        //String apiDateToday = "2017-01-08";
         String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
         currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s", apiDateToday, apiDateToday);
 
@@ -206,8 +207,6 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject currentGameJSON = jObj.getJSONArray("dates").getJSONObject(0).getJSONArray("games").getJSONObject(currentGame);
                     gameList.add(gameFromJSON(currentGameJSON));
                 }
-
-                Toast.makeText(MainActivity.this, gameList.get(0).toString(), Toast.LENGTH_LONG).show();
 
                 addGamesToList(gameList);
 
