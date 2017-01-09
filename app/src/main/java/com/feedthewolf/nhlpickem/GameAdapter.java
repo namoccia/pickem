@@ -8,7 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by nmoccia on 1/6/2017.
@@ -52,14 +57,22 @@ public class GameAdapter extends BaseAdapter {
         // Get home element
         TextView homeTextView = (TextView) rowView.findViewById(R.id.game_list_home_text);
 
-        // Get image element
+        // Get time element
+        TextView timeTextView = (TextView) rowView.findViewById(R.id.game_list_time_text);
+
+        // Get image elements
         ImageView awayLogo = (ImageView) rowView.findViewById(R.id.game_list_away_image);
         ImageView homeLogo = (ImageView) rowView.findViewById(R.id.game_list_home_image);
 
         Game game = (Game) getItem(position);
 
+        SimpleDateFormat df = new SimpleDateFormat("h:mm a");
+        String timeString = df.format(game.getDate());
+        //test.
+
         awayTextView.setText(game.getAwayTeam().toString());
         homeTextView.setText(game.getHomeTeam().toString());
+        timeTextView.setText(timeString);
         awayLogo.setImageResource(getImageResourceIdByTeamId(game.getAwayTeam().getId()));
         homeLogo.setImageResource(getImageResourceIdByTeamId(game.getHomeTeam().getId()));
 
