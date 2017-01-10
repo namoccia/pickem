@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_game_detail"
     android:layout_width="match_parent"
@@ -10,4 +11,107 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.feedthewolf.nhlpickem.GameDetailActivity">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="22dp"
+        android:layout_height="80dp"
+        android:id="@+id/awayTeamLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#dddddd">
+
+        <ImageView
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/awayTeamImageView"
+            android:layout_weight="1"
+            android:layout_width="80dp" />
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/awayTeamCenterInfo"
+            android:layout_width="210dp">
+
+            <TextView
+                tools:text="AwayTeamName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/awayTeamNameTextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="20dp"
+                android:layout_marginTop="15dp"/>
+
+            <TextView
+                tools:text="AwayTeamRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/awayTeamRecordTextView"
+                android:layout_marginTop="38dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/awayTeamScoreTextView"
+            android:layout_weight="1"
+            tools:text="0"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="112dp"
+        android:layout_height="80dp"
+        android:id="@+id/homeTeamLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#dddddd">
+
+        <ImageView
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/homeTeamImageView"
+            android:layout_weight="1"
+            android:layout_width="80dp" />
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/homeTeamCenterInfo"
+            android:layout_width="210dp">
+
+            <TextView
+                tools:text="HomeTeamName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/homeTeamNameTextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="20dp"
+                android:layout_marginTop="15dp"/>
+
+            <TextView
+                tools:text="HomeTeamRecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/homeTeamRecordTextView"
+                android:layout_marginTop="38dp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/homeTeamScoreTextView"
+            android:layout_weight="1"
+            tools:text="0"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+    </LinearLayout>
 </RelativeLayout>

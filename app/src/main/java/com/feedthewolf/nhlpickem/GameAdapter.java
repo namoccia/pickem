@@ -92,7 +92,7 @@ public class GameAdapter extends BaseAdapter {
         return rowView;
     }
 
-    private int getImageResourceIdByTeamId(int teamId) {
+    public static int getImageResourceIdByTeamId(int teamId) {
         switch (teamId) {
             case 21:
                 return R.drawable.ic_team_avalanche;
