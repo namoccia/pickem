@@ -14,18 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
@@ -54,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         //currentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
         Date date = new Date();
-        //String apiDateToday = "2017-01-08";
-        String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        String apiDateToday = "2017-01-09";
+        //String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
         currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s", apiDateToday, apiDateToday);
 
         JsonParser parser = new JsonParser();
@@ -146,15 +140,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addGamesToList(ArrayList<Game> objects) {
-
-        ArrayList<String> gameStringList = new ArrayList<>();
-        for (Game currentGame : objects) {
-            gameStringList.add(currentGame.toString());
-        }
-        String[] gameArray = gameStringList.toArray(new String[0]);
-        //mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gameArray);
-        //mGameList.setAdapter(mAdapter);
-
         GameAdapter gameAdapter = new GameAdapter(this, objects);
         mGameList.setAdapter(gameAdapter);
     }
@@ -215,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        protected Game gameFromJSON (JSONObject gameJSON) {
+        private Game gameFromJSON (JSONObject gameJSON) {
 
             try {
 

@@ -80,7 +80,7 @@ public class GameAdapter extends BaseAdapter {
         return rowView;
     }
 
-    public int getImageResourceIdByTeamId(int teamId) {
+    private int getImageResourceIdByTeamId(int teamId) {
         switch (teamId) {
             case 21:
                 return R.drawable.ic_team_avalanche;
@@ -147,7 +147,7 @@ public class GameAdapter extends BaseAdapter {
         }
     }
 
-    public String timeText(Game game) {
+    private String timeText(Game game) {
         String output = "";
 
         // if game date is in the future then show the game time
@@ -162,7 +162,7 @@ public class GameAdapter extends BaseAdapter {
         return output;
     }
 
-    public SpannableString scoreText(Game game) {
+    private SpannableString scoreText(Game game) {
         SpannableString output = new SpannableString("");
 
         // if game date is in the future then show no score
