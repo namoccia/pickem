@@ -1,7 +1,9 @@
 package com.feedthewolf.nhlpickem;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Parcelable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class GameAdapter extends BaseAdapter {
         ImageView awayLogo = (ImageView) rowView.findViewById(R.id.game_list_away_image);
         ImageView homeLogo = (ImageView) rowView.findViewById(R.id.game_list_home_image);
 
-        Game game = (Game) getItem(position);
+        final Game game = (Game) getItem(position);
 
         awayTextView.setText(game.getAwayTeam().toString());
         homeTextView.setText(game.getHomeTeam().toString());
@@ -76,6 +79,17 @@ public class GameAdapter extends BaseAdapter {
         timeTextView.setText(timeText(game));
         awayLogo.setImageResource(getImageResourceIdByTeamId(game.getAwayTeam().getId()));
         homeLogo.setImageResource(getImageResourceIdByTeamId(game.getHomeTeam().getId()));
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do your stuff
+                Intent intent = new Intent(view.getContext(), GameDetail.class);
+                intent.putExtra("TEST_EXTRA", game.toString());
+                intent.putExtra("TEST_PAR_ABLE", game);
+                mContext.startActivity(intent);
+            }
+        });
 
         return rowView;
     }

@@ -1,10 +1,13 @@
 package com.feedthewolf.nhlpickem;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by nmoccia on 1/4/2017.
  */
 
-public class LeagueRecord {
+public class LeagueRecord implements Parcelable {
     private int wins;
     private int losses;
     private int ot;
@@ -14,6 +17,35 @@ public class LeagueRecord {
         this.losses = losses;
         this.ot = ot;
     }
+
+    public LeagueRecord(Parcel in) {
+        this.wins = in.readInt();
+        this.losses = in.readInt();
+        this.ot = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(wins);
+        dest.writeInt(losses);
+        dest.writeInt(ot);
+    }
+
+    public static final Parcelable.Creator<LeagueRecord> CREATOR = new Parcelable.Creator<LeagueRecord>() {
+
+        public LeagueRecord createFromParcel(Parcel in) {
+            return new LeagueRecord(in);
+        }
+
+        public LeagueRecord[] newArray(int size) {
+            return new LeagueRecord[size];
+        }
+    };
 
     @Override
     public String toString() {
