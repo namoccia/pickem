@@ -3,7 +3,6 @@ package com.feedthewolf.nhlpickem;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Parcelable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,7 +82,7 @@ public class GameAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 // do your stuff
-                Intent intent = new Intent(view.getContext(), GameDetail.class);
+                Intent intent = new Intent(view.getContext(), GameDetailActivity.class);
                 intent.putExtra("TEST_EXTRA", game.toString());
                 intent.putExtra("TEST_PAR_ABLE", game);
                 mContext.startActivity(intent);
