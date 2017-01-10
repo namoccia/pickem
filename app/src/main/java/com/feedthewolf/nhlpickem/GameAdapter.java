@@ -156,7 +156,14 @@ public class GameAdapter extends BaseAdapter {
             output = df.format(game.getDate());
         }
         else {
-            output = "Final";
+            if (game.getStatus().compareToIgnoreCase("Final") == 0)
+            {
+                output = "Final";
+            }
+            else {
+                output = "Playing";
+            }
+
         }
 
         return output;
