@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
         currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
 
-        JsonParser parser = new JsonParser();
+        GameListJsonParser parser = new GameListJsonParser();
         parser.execute(currentUrlString);
 
 
@@ -167,15 +167,15 @@ public class MainActivity extends AppCompatActivity {
         String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
         currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
 
-        JsonParser parser = new JsonParser();
+        GameListJsonParser parser = new GameListJsonParser();
         parser.execute(currentUrlString);
 
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private class JsonParser extends AsyncTask<String, Void, String> {
+    private class GameListJsonParser extends AsyncTask<String, Void, String> {
 
-        final String TAG = "JsonParser";
+        final String TAG = "GameListJsonParser";
 
         HttpURLConnection urlConnection;
 
@@ -219,64 +219,13 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Game> gameList = new ArrayList<>();
                 for(int currentGame = 0; currentGame < numberOfGames; currentGame++) {
                     JSONObject currentGameJSON = jObj.getJSONArray("dates").getJSONObject(0).getJSONArray("games").getJSONObject(currentGame);
-                    gameList.add(gameFromJSON(currentGameJSON));
+                    gameList.add(Game.gameFromJSON(currentGameJSON));
                 }
 
                 addGamesToList(gameList);
 
             } catch (Exception e) {
                 Log.e(TAG, "Error parsing data " + e.toString());
-            }
-        }
-
-        private Game gameFromJSON (JSONObject gameJSON) {
-
-            try {
-
-                //region Set up awayTeam object
-                //----------------------------------------------------------------------------------
-                int awayWins = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("wins");
-                int awayLosses = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("losses");
-                int awayOt = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("ot");
-                int awayTeamId = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("team").getInt("id");
-                String awayTeamName = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("team").getString("name");
-                int awayTeamScore = gameJSON.getJSONObject("teams").getJSONObject("away").getInt("score");
-
-                LeagueRecord awayLeagueRecord = new LeagueRecord(awayWins, awayLosses, awayOt);
-                Team awayTeam = new Team(awayLeagueRecord, awayTeamScore, awayTeamId, awayTeamName);
-                //----------------------------------------------------------------------------------
-                //endregion
-
-                //region Set up homeTeam object
-                //----------------------------------------------------------------------------------
-                int homeWins = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("wins");
-                int homeLosses = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("losses");
-                int homeOt = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("ot");
-                int homeTeamId = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("team").getInt("id");
-                String homeTeamName = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("team").getString("name");
-                int homeTeamScore = gameJSON.getJSONObject("teams").getJSONObject("home").getInt("score");
-
-                LeagueRecord homeLeagueRecord = new LeagueRecord(homeWins, homeLosses, homeOt);
-                Team homeTeam = new Team(homeLeagueRecord, homeTeamScore, homeTeamId, homeTeamName);
-                //----------------------------------------------------------------------------------
-                //endregion
-
-                DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                jsonDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                Date gameDate = jsonDateFormat.parse(gameJSON.getString("gameDate"));
-
-                String gameStatus = gameJSON.getJSONObject("status").getString("abstractGameState");
-                String currentPeriodOrdinal = "";
-                String currentPeriodTimeRemaining = "";
-                if (!gameStatus.equalsIgnoreCase("preview")){
-                    currentPeriodOrdinal = gameJSON.getJSONObject("linescore").getString("currentPeriodOrdinal");
-                    currentPeriodTimeRemaining = gameJSON.getJSONObject("linescore").getString("currentPeriodTimeRemaining");
-                }
-
-                return new Game(gameDate, gameStatus, awayTeam, homeTeam, currentPeriodOrdinal, currentPeriodTimeRemaining);
-            } catch (Exception e) {
-                Log.e(TAG, "Error parsing game data " + e.toString());
-                return null;
             }
         }
     }

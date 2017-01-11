@@ -2,8 +2,14 @@ package com.feedthewolf.nhlpickem;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by nmoccia on 1/4/2017.
@@ -16,14 +22,16 @@ public class Game implements Parcelable {
     private Team homeTeam;
     private String currentPeriodOrdinal;
     private String currentPeriodTimeRemaining;
+    private int gameId;
 
-    public Game(Date date, String status, Team awayTeam, Team homeTeam, String currentPeriodOrdinal, String currentPeriodTimeRemaining) {
+    public Game(Date date, String status, Team awayTeam, Team homeTeam, String currentPeriodOrdinal, String currentPeriodTimeRemaining, int gameId) {
         this.date = date;
         this.status = status;
         this.awayTeam = awayTeam;
         this.homeTeam = homeTeam;
         this.currentPeriodOrdinal = currentPeriodOrdinal;
         this.currentPeriodTimeRemaining = currentPeriodTimeRemaining;
+        this.gameId = gameId;
     }
 
     public Game(Parcel in) {
@@ -34,6 +42,7 @@ public class Game implements Parcelable {
         this.status = in.readString();
         this.currentPeriodOrdinal = in.readString();
         this.currentPeriodTimeRemaining = in.readString();
+        this.gameId = in.readInt();
     }
 
     @Override
@@ -49,6 +58,7 @@ public class Game implements Parcelable {
         dest.writeString(status);
         dest.writeString(currentPeriodOrdinal);
         dest.writeString(currentPeriodTimeRemaining);
+        dest.writeInt(gameId);
     }
 
     public static final Parcelable.Creator<Game> CREATOR = new Parcelable.Creator<Game>() {
@@ -90,6 +100,10 @@ public class Game implements Parcelable {
     public String getCurrentPeriodTimeRemaining() {
         return currentPeriodTimeRemaining;
     }
+
+    public int getGameId() {
+        return gameId;
+    }
     //endregion
 
     //region Setters
@@ -116,7 +130,63 @@ public class Game implements Parcelable {
     public void setCurrentPeriodTimeRemaining(String currentPeriodTimeRemaining) {
         this.currentPeriodTimeRemaining = currentPeriodTimeRemaining;
     }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
     //endregion
+
+    static Game gameFromJSON(JSONObject gameJSON) {
+
+        try {
+
+            //region Set up awayTeam object
+            //----------------------------------------------------------------------------------
+            int awayWins = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("wins");
+            int awayLosses = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("losses");
+            int awayOt = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("ot");
+            int awayTeamId = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("team").getInt("id");
+            String awayTeamName = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("team").getString("name");
+            int awayTeamScore = gameJSON.getJSONObject("teams").getJSONObject("away").getInt("score");
+
+            LeagueRecord awayLeagueRecord = new LeagueRecord(awayWins, awayLosses, awayOt);
+            Team awayTeam = new Team(awayLeagueRecord, awayTeamScore, awayTeamId, awayTeamName);
+            //----------------------------------------------------------------------------------
+            //endregion
+
+            //region Set up homeTeam object
+            //----------------------------------------------------------------------------------
+            int homeWins = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("wins");
+            int homeLosses = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("losses");
+            int homeOt = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("ot");
+            int homeTeamId = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("team").getInt("id");
+            String homeTeamName = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("team").getString("name");
+            int homeTeamScore = gameJSON.getJSONObject("teams").getJSONObject("home").getInt("score");
+
+            LeagueRecord homeLeagueRecord = new LeagueRecord(homeWins, homeLosses, homeOt);
+            Team homeTeam = new Team(homeLeagueRecord, homeTeamScore, homeTeamId, homeTeamName);
+            //----------------------------------------------------------------------------------
+            //endregion
+
+            DateFormat jsonDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            jsonDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date gameDate = jsonDateFormat.parse(gameJSON.getString("gameDate"));
+
+            String gameStatus = gameJSON.getJSONObject("status").getString("abstractGameState");
+            String currentPeriodOrdinal = "";
+            String currentPeriodTimeRemaining = "";
+            if (!gameStatus.equalsIgnoreCase("preview")){
+                currentPeriodOrdinal = gameJSON.getJSONObject("linescore").getString("currentPeriodOrdinal");
+                currentPeriodTimeRemaining = gameJSON.getJSONObject("linescore").getString("currentPeriodTimeRemaining");
+            }
+            int gameId = gameJSON.getInt("gamePk");
+
+            return new Game(gameDate, gameStatus, awayTeam, homeTeam, currentPeriodOrdinal, currentPeriodTimeRemaining, gameId);
+        } catch (Exception e) {
+            Log.e("GameFromJson", "Error parsing game data " + e.toString());
+            return null;
+        }
+    }
 }
 
 

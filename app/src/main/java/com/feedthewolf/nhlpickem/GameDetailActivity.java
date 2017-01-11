@@ -1,15 +1,31 @@
 package com.feedthewolf.nhlpickem;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class GameDetailActivity extends AppCompatActivity {
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Game game;
+    private int gameId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,23 +34,26 @@ public class GameDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Game game = intent.getParcelableExtra("TEST_PAR_ABLE");
+        game = intent.getParcelableExtra("TEST_PAR_ABLE");
+        gameId = game.getGameId();
 
         setUpperTextViews(game);
         setAwayTeamBox(game);
         setHomeTeamBox(game);
-        /*
-        String message = intent.getStringExtra("TEST_EXTRA");
-        message = game.getAwayTeam().toString();
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(message);
 
-        ViewGroup layout = (ViewGroup) findViewById(R.id.activity_game_detail);
-        layout.addView(textView);
-        */
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshGameDetail);
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        //Log.i("REFRESH", "onRefresh called from SwipeRefreshLayout");
 
-
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        refreshGameDetails();
+                    }
+                }
+        );
     }
 
     protected void setUpperTextViews (Game game) {
@@ -100,6 +119,89 @@ public class GameDetailActivity extends AppCompatActivity {
         }
         else {
             homeTeamScore.setText(Integer.toString(game.getHomeTeam().getScore()));
+        }
+    }
+
+    protected void refreshGameDetails() {
+        Date date = new Date();
+        //String apiDateToday = "2017-01-09";
+        String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        String currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
+
+        GameFeedJsonParser parser = new GameFeedJsonParser();
+        parser.execute(currentUrlString);
+
+        setUpperTextViews(game);
+        setAwayTeamBox(game);
+        setHomeTeamBox(game);
+
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    private class GameFeedJsonParser extends AsyncTask<String, Void, String> {
+
+        final String TAG = "GameFeedJsonParser";
+
+        HttpURLConnection urlConnection;
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder result = new StringBuilder();
+
+            try {
+                URL url = new URL(urls[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+            }catch( Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                urlConnection.disconnect();
+            }
+
+            return result.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            //Do something with the JSON string
+
+            try {
+                JSONObject jObj = new JSONObject(result);
+                //Toast.makeText(MainActivity.this, "From API: " + jObj.getJSONArray("teams").getJSONObject(0).getString("name"), Toast.LENGTH_LONG).show();
+                int numberOfGames = jObj.getInt("totalGames");
+
+                ArrayList<Game> gameList = new ArrayList<>();
+                for(int currentGame = 0; currentGame < numberOfGames; currentGame++) {
+                    JSONObject currentGameJSON = jObj.getJSONArray("dates").getJSONObject(0).getJSONArray("games").getJSONObject(currentGame);
+                    gameList.add(Game.gameFromJSON(currentGameJSON));
+                }
+
+                game = findGameInGameListByGameId(gameList, gameId);
+
+            } catch (Exception e) {
+                Log.e(TAG, "Error parsing data " + e.toString());
+            }
+        }
+
+        Game findGameInGameListByGameId(ArrayList<Game> gameArrayList, int gameId) {
+
+            for(Game game: gameArrayList) {
+                if (game.getGameId() == gameId) {
+                    return game;
+                }
+            }
+
+            return gameArrayList.get(0);
         }
     }
 }
