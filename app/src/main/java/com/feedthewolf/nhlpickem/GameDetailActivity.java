@@ -1,10 +1,8 @@
 package com.feedthewolf.nhlpickem;
 
 import android.content.Intent;
-import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +18,7 @@ public class GameDetailActivity extends AppCompatActivity {
         Game game = intent.getParcelableExtra("TEST_PAR_ABLE");
 
         setAwayTeamBox(game);
-        sethomeTeamBox(game);
+        setHomeTeamBox(game);
         /*
         String message = intent.getStringExtra("TEST_EXTRA");
         message = game.getAwayTeam().toString();
@@ -56,7 +54,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     }
 
-    protected void sethomeTeamBox (Game game) {
+    protected void setHomeTeamBox(Game game) {
         ImageView homeLogo = (ImageView) findViewById(R.id.homeTeamImageView);
         TextView homeTeamNameView = (TextView) findViewById(R.id.homeTeamNameTextView);
         TextView homeTeamRecordView = (TextView) findViewById(R.id.homeTeamRecordTextView);
