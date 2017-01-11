@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Date date = new Date();
         //String apiDateToday = "2017-01-09";
         String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s", apiDateToday, apiDateToday);
+        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
 
         JsonParser parser = new JsonParser();
         parser.execute(currentUrlString);
@@ -237,8 +237,10 @@ public class MainActivity extends AppCompatActivity {
                 Date gameDate = jsonDateFormat.parse(gameJSON.getString("gameDate"));
 
                 String gameStatus = gameJSON.getJSONObject("status").getString("abstractGameState");
+                String currentPeriodOrdinal = gameJSON.getJSONObject("linescore").getString("currentPeriodOrdinal");
+                String currentPeriodTimeRemaining = gameJSON.getJSONObject("linescore").getString("currentPeriodTimeRemaining");
 
-                return new Game(gameDate, gameStatus, awayTeam, homeTeam);
+                return new Game(gameDate, gameStatus, awayTeam, homeTeam, currentPeriodOrdinal, currentPeriodTimeRemaining);
             } catch (Exception e) {
                 Log.e(TAG, "Error parsing game data " + e.toString());
                 return null;
