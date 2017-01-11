@@ -24,7 +24,6 @@ import java.util.Date;
 public class GameDetailActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private Game game;
     private int gameId;
 
     @Override
@@ -34,7 +33,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        game = intent.getParcelableExtra("TEST_PAR_ABLE");
+        Game game = intent.getParcelableExtra("TEST_PAR_ABLE");
         gameId = game.getGameId();
 
         setUpperTextViews(game);
@@ -130,12 +129,6 @@ public class GameDetailActivity extends AppCompatActivity {
 
         GameFeedJsonParser parser = new GameFeedJsonParser();
         parser.execute(currentUrlString);
-
-        setUpperTextViews(game);
-        setAwayTeamBox(game);
-        setHomeTeamBox(game);
-
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private class GameFeedJsonParser extends AsyncTask<String, Void, String> {
@@ -186,8 +179,13 @@ public class GameDetailActivity extends AppCompatActivity {
                     gameList.add(Game.gameFromJSON(currentGameJSON));
                 }
 
-                game = findGameInGameListByGameId(gameList, gameId);
+                Game game = findGameInGameListByGameId(gameList, gameId);
 
+                setUpperTextViews(game);
+                setAwayTeamBox(game);
+                setHomeTeamBox(game);
+
+                mSwipeRefreshLayout.setRefreshing(false);
             } catch (Exception e) {
                 Log.e(TAG, "Error parsing data " + e.toString());
             }

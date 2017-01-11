@@ -169,8 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
         GameListJsonParser parser = new GameListJsonParser();
         parser.execute(currentUrlString);
-
-        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private class GameListJsonParser extends AsyncTask<String, Void, String> {
@@ -224,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
                 addGamesToList(gameList);
 
+                mSwipeRefreshLayout.setRefreshing(false);
             } catch (Exception e) {
                 Log.e(TAG, "Error parsing data " + e.toString());
             }
