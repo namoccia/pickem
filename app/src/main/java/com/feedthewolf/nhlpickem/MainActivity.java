@@ -237,8 +237,12 @@ public class MainActivity extends AppCompatActivity {
                 Date gameDate = jsonDateFormat.parse(gameJSON.getString("gameDate"));
 
                 String gameStatus = gameJSON.getJSONObject("status").getString("abstractGameState");
-                String currentPeriodOrdinal = gameJSON.getJSONObject("linescore").getString("currentPeriodOrdinal");
-                String currentPeriodTimeRemaining = gameJSON.getJSONObject("linescore").getString("currentPeriodTimeRemaining");
+                String currentPeriodOrdinal = "";
+                String currentPeriodTimeRemaining = "";
+                if (!gameStatus.equalsIgnoreCase("preview")){
+                    currentPeriodOrdinal = gameJSON.getJSONObject("linescore").getString("currentPeriodOrdinal");
+                    currentPeriodTimeRemaining = gameJSON.getJSONObject("linescore").getString("currentPeriodTimeRemaining");
+                }
 
                 return new Game(gameDate, gameStatus, awayTeam, homeTeam, currentPeriodOrdinal, currentPeriodTimeRemaining);
             } catch (Exception e) {
