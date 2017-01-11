@@ -3,6 +3,7 @@ package com.feedthewolf.nhlpickem;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mDrawerList;
     private ListView mGameList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayAdapter<String> mAdapter;
 
     private ActionBarDrawerToggle mDrawerToggle;
@@ -79,6 +81,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshGameList);
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        //Log.i("REFRESH", "onRefresh called from SwipeRefreshLayout");
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        refreshGameList();
+                    }
+                }
+        );
     }
 
     private void addDrawerItems() {
@@ -142,6 +158,19 @@ public class MainActivity extends AppCompatActivity {
     private void addGamesToList(ArrayList<Game> objects) {
         GameAdapter gameAdapter = new GameAdapter(this, objects);
         mGameList.setAdapter(gameAdapter);
+    }
+
+    private void refreshGameList()
+    {
+        Date date = new Date();
+        //String apiDateToday = "2017-01-09";
+        String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
+
+        JsonParser parser = new JsonParser();
+        parser.execute(currentUrlString);
+
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private class JsonParser extends AsyncTask<String, Void, String> {
