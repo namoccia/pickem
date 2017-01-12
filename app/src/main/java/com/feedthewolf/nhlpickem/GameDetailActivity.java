@@ -2,12 +2,15 @@ package com.feedthewolf.nhlpickem;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import org.json.JSONObject;
 
@@ -39,6 +42,7 @@ public class GameDetailActivity extends AppCompatActivity {
         setUpperTextViews(game);
         setAwayTeamBox(game);
         setHomeTeamBox(game);
+        setPickButtons(game);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshGameDetail);
         mSwipeRefreshLayout.setOnRefreshListener(
@@ -135,6 +139,51 @@ public class GameDetailActivity extends AppCompatActivity {
 
         GameFeedJsonParser parser = new GameFeedJsonParser();
         parser.execute(currentUrlString);
+    }
+
+    protected void setPickButtons(Game game) {
+        final ToggleButton awayTeamButton = (ToggleButton) findViewById(R.id.awayTeamToggleButton);
+        final ToggleButton homeTeamButton = (ToggleButton) findViewById(R.id.homeTeamToggleButton);
+
+        awayTeamButton.setText(game.getAwayTeam().getName());
+        awayTeamButton.setTextOff(game.getAwayTeam().getName());
+        awayTeamButton.setTextOn(game.getAwayTeam().getName());
+        homeTeamButton.setText(game.getHomeTeam().getName());
+        homeTeamButton.setTextOff(game.getHomeTeam().getName());
+        homeTeamButton.setTextOn(game.getHomeTeam().getName());
+
+        awayTeamButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    homeTeamButton.setChecked(false);
+                    awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
+                    awayTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
+                }
+                else {
+                    awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.windowBackground));
+                    awayTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.navigationBarColor));
+                }
+            }
+        });
+
+        homeTeamButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    awayTeamButton.setChecked(false);
+                    homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
+                    homeTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
+                }
+                else {
+                    homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.windowBackground));
+                    homeTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.navigationBarColor));
+                }
+            }
+        });
+
+
+
+        //awayTeamButton.setEnabled(false);
+        //homeTeamButton.setEnabled(false);
     }
 
     private class GameFeedJsonParser extends AsyncTask<String, Void, String> {
