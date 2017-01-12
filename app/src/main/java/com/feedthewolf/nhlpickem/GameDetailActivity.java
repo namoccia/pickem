@@ -1,6 +1,9 @@
 package com.feedthewolf.nhlpickem;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,6 +31,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private int gameId;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class GameDetailActivity extends AppCompatActivity {
 
         Game game = intent.getParcelableExtra("TEST_PAR_ABLE");
         gameId = game.getGameId();
+
+        dbHelper = DatabaseHelper.getInstance(getBaseContext());
 
         setUpperTextViews(game);
         setAwayTeamBox(game);
@@ -141,7 +147,7 @@ public class GameDetailActivity extends AppCompatActivity {
         parser.execute(currentUrlString);
     }
 
-    protected void setPickButtons(Game game) {
+    protected void setPickButtons(final Game game) {
         final ToggleButton awayTeamButton = (ToggleButton) findViewById(R.id.awayTeamToggleButton);
         final ToggleButton homeTeamButton = (ToggleButton) findViewById(R.id.homeTeamToggleButton);
 
@@ -152,12 +158,36 @@ public class GameDetailActivity extends AppCompatActivity {
         homeTeamButton.setTextOff(game.getHomeTeam().getName());
         homeTeamButton.setTextOn(game.getHomeTeam().getName());
 
+        if(pickEntryAlreadyExistsForGameId(gameId)) {
+            Cursor cursor = null;
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            String sql = "SELECT * FROM picks WHERE gameId=" + gameId;
+            cursor = db.rawQuery(sql, null);
+
+            cursor.moveToFirst();
+            String currentSelection = cursor.getString(cursor.getColumnIndex("selection"));
+            cursor.close();
+
+            if (currentSelection.equalsIgnoreCase("away")) {
+                awayTeamButton.setChecked(true);
+                awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
+                awayTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
+            }
+            else if (currentSelection.equalsIgnoreCase("home")) {
+                homeTeamButton.setChecked(true);
+                homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
+                homeTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
+            }
+        }
+
         awayTeamButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     homeTeamButton.setChecked(false);
                     awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
                     awayTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
+
+                    updatePickInDatabase(game.getGameId(), "away", "none");
                 }
                 else {
                     awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.windowBackground));
@@ -172,6 +202,8 @@ public class GameDetailActivity extends AppCompatActivity {
                     awayTeamButton.setChecked(false);
                     homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
                     homeTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
+
+                    updatePickInDatabase(game.getGameId(), "home", "none");
                 }
                 else {
                     homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.windowBackground));
@@ -184,6 +216,43 @@ public class GameDetailActivity extends AppCompatActivity {
 
         //awayTeamButton.setEnabled(false);
         //homeTeamButton.setEnabled(false);
+    }
+
+    protected void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        if(pickEntryAlreadyExistsForGameId(gameId)){
+            //PID Found
+
+            ContentValues values = new ContentValues();
+            values.put("selection", currentSelection);
+            values.put("result", resultOfGame);
+
+            // Which row to update, based on the title
+            String selection = "gameId=" + gameId;
+
+            db.update("picks", values, selection, null);
+        }else{
+            //PID Not Found
+
+            ContentValues values = new ContentValues();
+            values.put("gameId", gameId);
+            values.put("selection", currentSelection);
+            values.put("result", resultOfGame);
+
+            db.insert("picks", null, values);
+        }
+    }
+
+    protected boolean pickEntryAlreadyExistsForGameId(int gameId) {
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
+        cursor = db.rawQuery(sql, null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+
+        return cursorCount>0;
     }
 
     private class GameFeedJsonParser extends AsyncTask<String, Void, String> {
