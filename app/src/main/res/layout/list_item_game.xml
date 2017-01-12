@@ -86,10 +86,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textAlignment="viewEnd"
             tools:text="TimeText"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="12dp"
+            android:gravity="end"
             />
 
         <TextView

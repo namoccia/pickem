@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //currentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
         Date date = new Date();
-        //String apiDateToday = "2017-01-09";
+        //String apiDateToday = "2017-01-12";
         String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
         currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
 
@@ -95,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshGameList();
     }
 
     private void addDrawerItems() {

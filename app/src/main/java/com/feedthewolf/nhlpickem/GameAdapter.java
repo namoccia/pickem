@@ -173,7 +173,7 @@ public class GameAdapter extends BaseAdapter {
                 output = "Final";
             }
             else {
-                output = "Playing";
+                output = String.format("%s\n%s", game.getCurrentPeriodOrdinal(), game.getCurrentPeriodTimeRemaining());
             }
 
         }

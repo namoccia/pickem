@@ -55,6 +55,12 @@ public class GameDetailActivity extends AppCompatActivity {
         );
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshGameDetails();
+    }
+
     protected void setUpperTextViews (Game game) {
         TextView upperLeftTextView = (TextView) findViewById(R.id.upperLeftTextView);
         TextView upperCenterTextView = (TextView) findViewById(R.id.upperCenterTextView);
