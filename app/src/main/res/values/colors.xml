@@ -6,4 +6,6 @@
     <color name="windowBackground">#FAFAFA</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#c8e8ff</color>
+    <color name="correctPickListBackground">#FFB9F6CA</color>
+    <color name="incorrectPickListBackground">#FFFFCDD2</color>
 </resources>

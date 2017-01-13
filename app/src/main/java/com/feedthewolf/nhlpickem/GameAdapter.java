@@ -2,7 +2,10 @@ package com.feedthewolf.nhlpickem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
@@ -26,10 +29,12 @@ public class GameAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Game> mDataSource;
+    private DatabaseHelper dbHelper;
 
     public GameAdapter(Context context, ArrayList<Game> items) {
         mContext = context;
         mDataSource = items;
+        dbHelper = DatabaseHelper.getInstance(mContext);
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -78,6 +83,8 @@ public class GameAdapter extends BaseAdapter {
         awayLogo.setImageResource(getImageResourceIdByTeamId(game.getAwayTeam().getId()));
         homeLogo.setImageResource(getImageResourceIdByTeamId(game.getHomeTeam().getId()));
 
+        rowView.setBackgroundColor(ContextCompat.getColor(mContext, getColorResourceByPickStatus(game)));
+
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +97,34 @@ public class GameAdapter extends BaseAdapter {
         });
 
         return rowView;
+    }
+
+    protected int getColorResourceByPickStatus(Game game) {
+        if(pickEntryAlreadyExistsForGameId(game.getGameId()) && hasGameFinished(game)) {
+            Cursor cursor = null;
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            String sql = "SELECT * FROM picks WHERE gameId=" + game.getGameId();
+            cursor = db.rawQuery(sql, null);
+
+            cursor.moveToFirst();
+            String currentSelection = cursor.getString(cursor.getColumnIndex("selection"));
+            cursor.close();
+
+            String winner = getWinnerForDatabase(game);
+
+            if (!currentSelection.equalsIgnoreCase("none") && !winner.equalsIgnoreCase("none")) {
+                if (currentSelection.equalsIgnoreCase(winner))
+                    return R.color.correctPickListBackground;
+                else
+                    return R.color.incorrectPickListBackground;
+            }
+            else {
+                return R.color.windowBackground;
+            }
+        }
+        else {
+            return R.color.windowBackground;
+        }
     }
 
     public static int getImageResourceIdByTeamId(int teamId) {
@@ -202,5 +237,27 @@ public class GameAdapter extends BaseAdapter {
         }
 
         return output;
+    }
+
+    protected boolean pickEntryAlreadyExistsForGameId(int gameId) {
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
+        cursor = db.rawQuery(sql, null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+
+        return cursorCount>0;
+    }
+
+    protected static String getWinnerForDatabase(Game game) {
+        if (game.getAwayTeam().getScore() > game.getHomeTeam().getScore())
+            return "away";
+        else
+            return "home";
+    }
+
+    protected boolean hasGameFinished(Game game) {
+        return game.getStatus().equalsIgnoreCase("Final");
     }
 }

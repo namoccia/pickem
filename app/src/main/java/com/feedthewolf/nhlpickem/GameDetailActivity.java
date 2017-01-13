@@ -85,14 +85,14 @@ public class GameDetailActivity extends AppCompatActivity {
         }
 
         String rightText = "";
-        if (game.getDate().compareTo(new Date()) > 0) {
-            SimpleDateFormat gameStartTime = new SimpleDateFormat("h:mm a");
-            rightText = gameStartTime.format(game.getDate());
-        }
-        else {
+        if (hasGameStarted(game)) {
             if (!game.getStatus().equalsIgnoreCase("Final")) {
                 rightText = String.format("%s %s", game.getCurrentPeriodOrdinal(), game.getCurrentPeriodTimeRemaining());
             }
+        }
+        else {
+            SimpleDateFormat gameStartTime = new SimpleDateFormat("h:mm a");
+            rightText = gameStartTime.format(game.getDate());
         }
 
         upperLeftTextView.setText(leftText);
@@ -139,7 +139,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     protected void refreshGameDetails() {
         Date date = new Date();
-        //String apiDateToday = "2017-01-09";
+        //String apiDateToday = "2017-01-12";
         String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
         String currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
 
@@ -150,6 +150,8 @@ public class GameDetailActivity extends AppCompatActivity {
     protected void setPickButtons(final Game game) {
         final ToggleButton awayTeamButton = (ToggleButton) findViewById(R.id.awayTeamToggleButton);
         final ToggleButton homeTeamButton = (ToggleButton) findViewById(R.id.homeTeamToggleButton);
+        final ImageView lockImageView = (ImageView) findViewById(R.id.lockImageView);
+        final boolean hasGameStarted = hasGameStarted(game);
 
         awayTeamButton.setText(game.getAwayTeam().getName());
         awayTeamButton.setTextOff(game.getAwayTeam().getName());
@@ -212,10 +214,46 @@ public class GameDetailActivity extends AppCompatActivity {
             }
         });
 
+        // Lock in picks
+        if (hasGameStarted) {
+            awayTeamButton.setEnabled(false);
+            homeTeamButton.setEnabled(false);
+            lockImageView.setVisibility(ImageView.VISIBLE);
+        }
 
+        // Update result in database once game is over
+        if (game.getStatus().equalsIgnoreCase("Final")) {
+            if(pickEntryAlreadyExistsForGameId(gameId)) {
+                Cursor cursor = null;
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                String sql = "SELECT * FROM picks WHERE gameId=" + gameId;
+                cursor = db.rawQuery(sql, null);
 
-        //awayTeamButton.setEnabled(false);
-        //homeTeamButton.setEnabled(false);
+                cursor.moveToFirst();
+                String currentSelection = cursor.getString(cursor.getColumnIndex("selection"));
+                cursor.close();
+
+                String winner = getWinnerForDatabase(game);
+
+                if (currentSelection.equalsIgnoreCase("away")) {
+                    updatePickInDatabase(game.getGameId(), "away", winner);
+                }
+                else if (currentSelection.equalsIgnoreCase("home")) {
+                    updatePickInDatabase(game.getGameId(), "home", winner);
+                }
+            }
+        }
+    }
+
+    protected boolean hasGameStarted(Game game) {
+        return game.getDate().compareTo(new Date()) < 0;
+    }
+
+    protected static String getWinnerForDatabase(Game game) {
+        if (game.getAwayTeam().getScore() > game.getHomeTeam().getScore())
+            return "away";
+        else
+            return "home";
     }
 
     protected void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame) {
@@ -308,6 +346,7 @@ public class GameDetailActivity extends AppCompatActivity {
                 setUpperTextViews(game);
                 setAwayTeamBox(game);
                 setHomeTeamBox(game);
+                setPickButtons(game);
 
                 mSwipeRefreshLayout.setRefreshing(false);
             } catch (Exception e) {
