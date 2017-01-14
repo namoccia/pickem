@@ -1,5 +1,7 @@
 package com.feedthewolf.nhlpickem;
 
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,13 +28,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener {
 
     private ListView mDrawerList;
     private ListView mGameList;
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private String currentUrlString;
     private JSONObject jObj = null;
 
+    private String apiDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         //currentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
         Date date = new Date();
-        //String apiDateToday = "2017-01-12";
-        String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
+        //String apiDate = "2017-01-12";
+        apiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDate, apiDate);
 
         GameListJsonParser parser = new GameListJsonParser();
         parser.execute(currentUrlString);
@@ -168,11 +172,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.action_date_pick) {
-            Toast.makeText(MainActivity.this, "Cal pick!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(MainActivity.this, "Cal pick!", Toast.LENGTH_LONG).show();
+            showDatePickerDialog();
+            refreshGameList();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showDatePickerDialog() {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
     }
 
     private void addGamesToList(ArrayList<Game> objects) {
@@ -182,13 +193,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void refreshGameList()
     {
-        Date date = new Date();
-        //String apiDateToday = "2017-01-12";
-        String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
+        //Date date = new Date();
+        //String apiDate = "2017-01-12";
+        //String apiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDate, apiDate);
 
         GameListJsonParser parser = new GameListJsonParser();
         parser.execute(currentUrlString);
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        apiDate = String.format("%d-%02d-%d", year, month+1, day);
+        refreshGameList();
     }
 
     private class GameListJsonParser extends AsyncTask<String, Void, String> {

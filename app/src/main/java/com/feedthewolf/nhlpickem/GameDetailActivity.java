@@ -31,6 +31,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private int gameId;
+    private String apiDate;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -41,6 +42,7 @@ public class GameDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         Game game = intent.getParcelableExtra("TEST_PAR_ABLE");
+        apiDate = new SimpleDateFormat("yyyy-MM-dd").format(game.getDate());
         gameId = game.getGameId();
 
         dbHelper = DatabaseHelper.getInstance(getBaseContext());
@@ -138,10 +140,10 @@ public class GameDetailActivity extends AppCompatActivity {
     }
 
     protected void refreshGameDetails() {
-        Date date = new Date();
-        //String apiDateToday = "2017-01-12";
-        String apiDateToday = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        String currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDateToday, apiDateToday);
+        //Date date = new Date();
+        //String apiDate = "2017-01-12";
+        //String apiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        String currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDate, apiDate);
 
         GameFeedJsonParser parser = new GameFeedJsonParser();
         parser.execute(currentUrlString);
