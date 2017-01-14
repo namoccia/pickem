@@ -18,9 +18,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -28,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 
     private ListView mDrawerList;
     private ListView mGameList;
+    private TextView mDateHeading;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayAdapter<String> mAdapter;
 
@@ -63,6 +68,8 @@ public class MainActivity extends AppCompatActivity
         GameListJsonParser parser = new GameListJsonParser();
         parser.execute(currentUrlString);
 
+        mDateHeading = (TextView) findViewById(R.id.date_heading_text_view);
+        updateDateHeading();
 
         // add hamburger menu to top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -172,7 +179,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (item.getItemId() == R.id.action_date_pick) {
-            //Toast.makeText(MainActivity.this, "Cal pick!", Toast.LENGTH_LONG).show();
             showDatePickerDialog();
             refreshGameList();
             return true;
@@ -193,9 +199,6 @@ public class MainActivity extends AppCompatActivity
 
     private void refreshGameList()
     {
-        //Date date = new Date();
-        //String apiDate = "2017-01-12";
-        //String apiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
         currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDate, apiDate);
 
         GameListJsonParser parser = new GameListJsonParser();
@@ -205,7 +208,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         apiDate = String.format("%d-%02d-%d", year, month+1, day);
+        updateDateHeading();
         refreshGameList();
+    }
+
+    public void updateDateHeading() {
+        DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
+        try {
+            Date selectedListDate = apiDateFormat.parse(apiDate);
+            String headingDate = new SimpleDateFormat("MMM, d").format(selectedListDate);
+
+            mDateHeading.setText(headingDate);
+        } catch (ParseException e) {
+            mDateHeading.setText(apiDate);
+            e.printStackTrace();
+        }
     }
 
     private class GameListJsonParser extends AsyncTask<String, Void, String> {
