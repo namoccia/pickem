@@ -34,6 +34,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
@@ -221,6 +222,44 @@ public class MainActivity extends AppCompatActivity
             mDateHeading.setText(headingDate);
         } catch (ParseException e) {
             mDateHeading.setText(apiDate);
+            e.printStackTrace();
+        }
+    }
+
+    public void onLeftChevronClick(View view) {
+        //Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
+
+        DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
+        try {
+            Date selectedListDate = apiDateFormat.parse(apiDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(selectedListDate);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+            apiDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            updateDateHeading();
+            refreshGameList();
+            //selectedListDate.
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onRightChevronClick(View view) {
+        //Toast.makeText(MainActivity.this, "Right!", Toast.LENGTH_SHORT).show();
+
+        DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
+        try {
+            Date selectedListDate = apiDateFormat.parse(apiDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(selectedListDate);
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+
+            apiDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            updateDateHeading();
+            refreshGameList();
+            //selectedListDate.
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }
