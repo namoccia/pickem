@@ -100,7 +100,7 @@ public class GameAdapter extends BaseAdapter {
     }
 
     protected int getColorResourceByPickStatus(Game game) {
-        if(pickEntryAlreadyExistsForGameId(game.getGameId()) && hasGameFinished(game)) {
+        if(dbHelper.pickEntryAlreadyExistsForGameId(game.getGameId(), dbHelper) && game.hasGameFinished()) {
             Cursor cursor = null;
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             String sql = "SELECT * FROM picks WHERE gameId=" + game.getGameId();
@@ -110,7 +110,7 @@ public class GameAdapter extends BaseAdapter {
             String currentSelection = cursor.getString(cursor.getColumnIndex("selection"));
             cursor.close();
 
-            String winner = getWinnerForDatabase(game);
+            String winner = game.getWinnerForDatabase();
 
             if (!currentSelection.equalsIgnoreCase("none") && !winner.equalsIgnoreCase("none")) {
                 if (currentSelection.equalsIgnoreCase(winner))
@@ -237,27 +237,5 @@ public class GameAdapter extends BaseAdapter {
         }
 
         return output;
-    }
-
-    protected boolean pickEntryAlreadyExistsForGameId(int gameId) {
-        Cursor cursor = null;
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
-        cursor = db.rawQuery(sql, null);
-        int cursorCount = cursor.getCount();
-        cursor.close();
-
-        return cursorCount>0;
-    }
-
-    protected static String getWinnerForDatabase(Game game) {
-        if (game.getAwayTeam().getScore() > game.getHomeTeam().getScore())
-            return "away";
-        else
-            return "home";
-    }
-
-    protected boolean hasGameFinished(Game game) {
-        return game.getStatus().equalsIgnoreCase("Final");
     }
 }

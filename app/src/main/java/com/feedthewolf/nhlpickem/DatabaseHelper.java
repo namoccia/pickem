@@ -1,6 +1,7 @@
 package com.feedthewolf.nhlpickem;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -47,6 +48,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public boolean pickEntryAlreadyExistsForGameId(int gameId, DatabaseHelper dbHelper) {
+        Cursor cursor = null;
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
+        cursor = db.rawQuery(sql, null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+
+        return cursorCount>0;
     }
 
     @Override

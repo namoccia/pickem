@@ -87,7 +87,7 @@ public class GameDetailActivity extends AppCompatActivity {
         }
 
         String rightText = "";
-        if (hasGameStarted(game)) {
+        if (game.hasGameStarted()) {
             if (!game.getStatus().equalsIgnoreCase("Final")) {
                 rightText = String.format("%s %s", game.getCurrentPeriodOrdinal(), game.getCurrentPeriodTimeRemaining());
             }
@@ -153,7 +153,7 @@ public class GameDetailActivity extends AppCompatActivity {
         final ToggleButton awayTeamButton = (ToggleButton) findViewById(R.id.awayTeamToggleButton);
         final ToggleButton homeTeamButton = (ToggleButton) findViewById(R.id.homeTeamToggleButton);
         final ImageView lockImageView = (ImageView) findViewById(R.id.lockImageView);
-        final boolean hasGameStarted = hasGameStarted(game);
+        final boolean hasGameStarted = game.hasGameStarted();
 
         awayTeamButton.setText(game.getAwayTeam().getName());
         awayTeamButton.setTextOff(game.getAwayTeam().getName());
@@ -162,7 +162,7 @@ public class GameDetailActivity extends AppCompatActivity {
         homeTeamButton.setTextOff(game.getHomeTeam().getName());
         homeTeamButton.setTextOn(game.getHomeTeam().getName());
 
-        if(pickEntryAlreadyExistsForGameId(gameId)) {
+        if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)) {
             Cursor cursor = null;
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             String sql = "SELECT * FROM picks WHERE gameId=" + gameId;
@@ -225,7 +225,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
         // Update result in database once game is over
         if (game.getStatus().equalsIgnoreCase("Final")) {
-            if(pickEntryAlreadyExistsForGameId(gameId)) {
+            if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)) {
                 Cursor cursor = null;
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 String sql = "SELECT * FROM picks WHERE gameId=" + gameId;
@@ -235,7 +235,7 @@ public class GameDetailActivity extends AppCompatActivity {
                 String currentSelection = cursor.getString(cursor.getColumnIndex("selection"));
                 cursor.close();
 
-                String winner = getWinnerForDatabase(game);
+                String winner = game.getWinnerForDatabase();
 
                 if (currentSelection.equalsIgnoreCase("away")) {
                     updatePickInDatabase(game.getGameId(), "away", winner);
@@ -247,21 +247,10 @@ public class GameDetailActivity extends AppCompatActivity {
         }
     }
 
-    protected boolean hasGameStarted(Game game) {
-        return game.getDate().compareTo(new Date()) < 0;
-    }
-
-    protected static String getWinnerForDatabase(Game game) {
-        if (game.getAwayTeam().getScore() > game.getHomeTeam().getScore())
-            return "away";
-        else
-            return "home";
-    }
-
     protected void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        if(pickEntryAlreadyExistsForGameId(gameId)){
+        if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)){
             //PID Found
 
             ContentValues values = new ContentValues();
@@ -282,17 +271,6 @@ public class GameDetailActivity extends AppCompatActivity {
 
             db.insert("picks", null, values);
         }
-    }
-
-    protected boolean pickEntryAlreadyExistsForGameId(int gameId) {
-        Cursor cursor = null;
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
-        cursor = db.rawQuery(sql, null);
-        int cursorCount = cursor.getCount();
-        cursor.close();
-
-        return cursorCount>0;
     }
 
     private class GameFeedJsonParser extends AsyncTask<String, Void, String> {

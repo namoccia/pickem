@@ -104,6 +104,13 @@ public class Game implements Parcelable {
     public int getGameId() {
         return gameId;
     }
+
+    public String getWinnerForDatabase() {
+        if (getAwayTeam().getScore() > getHomeTeam().getScore())
+            return "away";
+        else
+            return "home";
+    }
     //endregion
 
     //region Setters
@@ -135,6 +142,14 @@ public class Game implements Parcelable {
         this.gameId = gameId;
     }
     //endregion
+
+    public boolean hasGameFinished() {
+        return getStatus().equalsIgnoreCase("Final");
+    }
+
+    public boolean hasGameStarted() {
+        return getDate().compareTo(new Date()) < 0;
+    }
 
     static Game gameFromJSON(JSONObject gameJSON) {
 
