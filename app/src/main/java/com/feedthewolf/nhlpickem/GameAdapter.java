@@ -205,12 +205,21 @@ public class GameAdapter extends BaseAdapter {
         else {
             if (game.getStatus().compareToIgnoreCase("Final") == 0)
             {
-                output = "Final";
+                if (game.getCurrentPeriodOrdinal().contains("OT") || game.getCurrentPeriodOrdinal().contains("SO")) {
+                    output = String.format("%s\n%s", "Final", game.getCurrentPeriodOrdinal());
+                }
+                else {
+                    output = "Final";
+                }
             }
             else {
-                output = String.format("%s\n%s", game.getCurrentPeriodOrdinal(), game.getCurrentPeriodTimeRemaining());
+                if (game.getCurrentPeriodOrdinal().contains("SO")) {
+                    output = game.getCurrentPeriodOrdinal();
+                }
+                else {
+                    output = String.format("%s\n%s", game.getCurrentPeriodOrdinal(), game.getCurrentPeriodTimeRemaining());
+                }
             }
-
         }
 
         return output;
