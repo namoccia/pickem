@@ -2,5 +2,6 @@
     <string name="app_name">NHL Pick \'Em</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="today">Today</string>
     <string name="thumbnail">Test thumb</string>
 </resources>

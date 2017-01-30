@@ -214,9 +214,16 @@ public class MainActivity extends AppCompatActivity
         DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
         try {
             Date selectedListDate = apiDateFormat.parse(apiDate);
+            Date dateToday = new Date();
             String headingDate = new SimpleDateFormat("MMM, d").format(selectedListDate);
+            String headingDateToday = new SimpleDateFormat("MMM, d").format(dateToday);
 
-            mDateHeading.setText(headingDate);
+            if( headingDate.equalsIgnoreCase(headingDateToday)) {
+                mDateHeading.setText(R.string.today);
+            }
+            else {
+                mDateHeading.setText(headingDate);
+            }
         } catch (ParseException e) {
             mDateHeading.setText(apiDate);
             e.printStackTrace();
