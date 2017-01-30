@@ -13,14 +13,14 @@ class Team implements Parcelable {
     private int id;
     private String name;
 
-    private Team(LeagueRecord leagueRecord, int score, int id, String name) {
+    Team(LeagueRecord leagueRecord, int score, int id, String name) {
         this.leagueRecord = leagueRecord;
         this.score = score;
         this.id = id;
         this.name = name;
     }
 
-    private Team(Parcel in) {
+    Team(Parcel in) {
         this.leagueRecord = in.readParcelable(LeagueRecord.class.getClassLoader());
         this.score = in.readInt();
         this.id = in.readInt();
