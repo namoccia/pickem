@@ -15,7 +15,7 @@ import java.util.TimeZone;
  * Created by nmoccia on 1/4/2017.
  */
 
-public class Game implements Parcelable {
+class Game implements Parcelable {
     private Date date;
     private String status;
     private Team awayTeam;
@@ -24,7 +24,7 @@ public class Game implements Parcelable {
     private String currentPeriodTimeRemaining;
     private int gameId;
 
-    public Game(Date date, String status, Team awayTeam, Team homeTeam, String currentPeriodOrdinal, String currentPeriodTimeRemaining, int gameId) {
+    private Game(Date date, String status, Team awayTeam, Team homeTeam, String currentPeriodOrdinal, String currentPeriodTimeRemaining, int gameId) {
         this.date = date;
         this.status = status;
         this.awayTeam = awayTeam;
@@ -34,7 +34,7 @@ public class Game implements Parcelable {
         this.gameId = gameId;
     }
 
-    public Game(Parcel in) {
+    private Game(Parcel in) {
         this.awayTeam = in.readParcelable(Team.class.getClassLoader());
         this.homeTeam = in.readParcelable(Team.class.getClassLoader());
         long tmpDate = in.readLong();
@@ -77,35 +77,35 @@ public class Game implements Parcelable {
     }
 
     //region Getters
-    public Date getDate() {
+    Date getDate() {
         return date;
     }
 
-    public String getStatus() {
+    String getStatus() {
         return status;
     }
 
-    public Team getAwayTeam() {
+    Team getAwayTeam() {
         return awayTeam;
     }
 
-    public Team getHomeTeam() {
+    Team getHomeTeam() {
         return homeTeam;
     }
 
-    public String getCurrentPeriodOrdinal() {
+    String getCurrentPeriodOrdinal() {
         return currentPeriodOrdinal;
     }
 
-    public String getCurrentPeriodTimeRemaining() {
+    String getCurrentPeriodTimeRemaining() {
         return currentPeriodTimeRemaining;
     }
 
-    public int getGameId() {
+    int getGameId() {
         return gameId;
     }
 
-    public String getWinnerForDatabase() {
+    String getWinnerForDatabase() {
         if (getAwayTeam().getScore() > getHomeTeam().getScore())
             return "away";
         else
@@ -143,11 +143,11 @@ public class Game implements Parcelable {
     }
     //endregion
 
-    public boolean hasGameFinished() {
+    boolean hasGameFinished() {
         return getStatus().equalsIgnoreCase("Final");
     }
 
-    public boolean hasGameStarted() {
+    boolean hasGameStarted() {
         return getDate().compareTo(new Date()) < 0;
     }
 

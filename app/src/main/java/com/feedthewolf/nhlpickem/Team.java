@@ -7,20 +7,20 @@ import android.os.Parcelable;
  * Created by nmoccia on 1/4/2017.
  */
 
-public class Team implements Parcelable {
+class Team implements Parcelable {
     private LeagueRecord leagueRecord;
     private int score;
     private int id;
     private String name;
 
-    public Team(LeagueRecord leagueRecord, int score, int id, String name) {
+    private Team(LeagueRecord leagueRecord, int score, int id, String name) {
         this.leagueRecord = leagueRecord;
         this.score = score;
         this.id = id;
         this.name = name;
     }
 
-    public Team(Parcel in) {
+    private Team(Parcel in) {
         this.leagueRecord = in.readParcelable(LeagueRecord.class.getClassLoader());
         this.score = in.readInt();
         this.id = in.readInt();
@@ -56,11 +56,11 @@ public class Team implements Parcelable {
     }
 
     //region Getters
-    public LeagueRecord getLeagueRecord() {
+    LeagueRecord getLeagueRecord() {
         return leagueRecord;
     }
 
-    public int getScore() {
+    int getScore() {
         return score;
     }
 

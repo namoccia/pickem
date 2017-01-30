@@ -24,14 +24,14 @@ import java.util.Date;
  * Created by nmoccia on 1/6/2017.
  */
 
-public class GameAdapter extends BaseAdapter {
+class GameAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<Game> mDataSource;
     private DatabaseHelper dbHelper;
 
-    public GameAdapter(Context context, ArrayList<Game> items) {
+    GameAdapter(Context context, ArrayList<Game> items) {
         mContext = context;
         mDataSource = items;
         dbHelper = DatabaseHelper.getInstance(mContext);
@@ -99,7 +99,7 @@ public class GameAdapter extends BaseAdapter {
         return rowView;
     }
 
-    protected int getColorResourceByPickStatus(Game game) {
+    private int getColorResourceByPickStatus(Game game) {
         if(dbHelper.pickEntryAlreadyExistsForGameId(game.getGameId(), dbHelper) && game.hasGameFinished()) {
             Cursor cursor = null;
             SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -127,7 +127,7 @@ public class GameAdapter extends BaseAdapter {
         }
     }
 
-    public static int getImageResourceIdByTeamId(int teamId) {
+    static int getImageResourceIdByTeamId(int teamId) {
         switch (teamId) {
             case 21:
                 return R.drawable.ic_team_avalanche;

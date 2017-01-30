@@ -7,18 +7,18 @@ import android.os.Parcelable;
  * Created by nmoccia on 1/4/2017.
  */
 
-public class LeagueRecord implements Parcelable {
+class LeagueRecord implements Parcelable {
     private int wins;
     private int losses;
     private int ot;
 
-    public LeagueRecord(int wins, int losses, int ot) {
+    LeagueRecord(int wins, int losses, int ot) {
         this.wins = wins;
         this.losses = losses;
         this.ot = ot;
     }
 
-    public LeagueRecord(Parcel in) {
+    private LeagueRecord(Parcel in) {
         this.wins = in.readInt();
         this.losses = in.readInt();
         this.ot = in.readInt();
@@ -53,30 +53,30 @@ public class LeagueRecord implements Parcelable {
     }
 
     //region Getters
-    public int getWins() {
+    int getWins() {
         return wins;
     }
 
-    public int getLosses() {
+    int getLosses() {
         return losses;
     }
 
-    public int getOt() {
+    int getOt() {
         return ot;
     }
     //endregion
 
 
     //region Setters
-    public void setWins(int wins) {
+    void setWins(int wins) {
         this.wins = wins;
     }
 
-    public void setLosses(int losses) {
+    void setLosses(int losses) {
         this.losses = losses;
     }
 
-    public void setOt(int ot) {
+    void setOt(int ot) {
         this.ot = ot;
     }
     //endregion

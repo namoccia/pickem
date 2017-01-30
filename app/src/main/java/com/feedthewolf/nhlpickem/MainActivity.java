@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -44,14 +43,12 @@ public class MainActivity extends AppCompatActivity
     private ListView mGameList;
     private TextView mDateHeading;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private ArrayAdapter<String> mAdapter;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
     private String currentUrlString;
-    private JSONObject jObj = null;
 
     private String apiDate;
 
@@ -119,7 +116,7 @@ public class MainActivity extends AppCompatActivity
 
     private void addDrawerItems() {
         String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
 
@@ -303,7 +300,7 @@ public class MainActivity extends AppCompatActivity
             //Do something with the JSON string
 
             try {
-                jObj = new JSONObject(result);
+                JSONObject jObj = new JSONObject(result);
                 //Toast.makeText(MainActivity.this, "From API: " + jObj.getJSONArray("teams").getJSONObject(0).getString("name"), Toast.LENGTH_LONG).show();
                 int numberOfGames = jObj.getInt("totalGames");
 

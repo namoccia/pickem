@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by nmoccia on 1/12/2017.
  */
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper sInstance;
     private static final int DATABASE_VERSION = 1;
@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_PICKS_TABLE =
             "DROP TABLE IF EXISTS " + DATABASE_TABLE_PICKS;
 
-    public static synchronized DatabaseHelper getInstance(Context context) {
+    static synchronized DatabaseHelper getInstance(Context context) {
 
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public boolean pickEntryAlreadyExistsForGameId(int gameId, DatabaseHelper dbHelper) {
+    boolean pickEntryAlreadyExistsForGameId(int gameId, DatabaseHelper dbHelper) {
         Cursor cursor = null;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
