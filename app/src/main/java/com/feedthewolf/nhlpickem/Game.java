@@ -159,7 +159,11 @@ class Game implements Parcelable {
             //----------------------------------------------------------------------------------
             int awayWins = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("wins");
             int awayLosses = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("losses");
-            int awayOt = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("ot");
+
+            int awayOt = 0;
+            if (gameJSON.getString("gameType").equalsIgnoreCase("R"))
+                awayOt = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("leagueRecord").getInt("ot");
+
             int awayTeamId = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("team").getInt("id");
             String awayTeamName = gameJSON.getJSONObject("teams").getJSONObject("away").getJSONObject("team").getString("name");
             int awayTeamScore = gameJSON.getJSONObject("teams").getJSONObject("away").getInt("score");
@@ -173,7 +177,10 @@ class Game implements Parcelable {
             //----------------------------------------------------------------------------------
             int homeWins = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("wins");
             int homeLosses = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("losses");
-            int homeOt = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("ot");
+
+            int homeOt = 0;
+            if (gameJSON.getString("gameType").equalsIgnoreCase("R"))
+                homeOt = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("leagueRecord").getInt("ot");
             int homeTeamId = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("team").getInt("id");
             String homeTeamName = gameJSON.getJSONObject("teams").getJSONObject("home").getJSONObject("team").getString("name");
             int homeTeamScore = gameJSON.getJSONObject("teams").getJSONObject("home").getInt("score");

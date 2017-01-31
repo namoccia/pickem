@@ -52,7 +52,10 @@ class Team implements Parcelable {
 
     @Override
     public String toString() {
-        return String.format("%s (%s)", name, leagueRecord.toString());
+        if (leagueRecord.toString().equalsIgnoreCase("0-0-0"))
+            return name;
+        else
+            return String.format("%s (%s)", name, leagueRecord.toString());
     }
 
     //region Getters

@@ -103,6 +103,8 @@
             android:lineSpacingMultiplier="1.3"
             tools:text="ScoreText"
             android:layout_centerVertical="true"
+            android:textAlignment="viewEnd"
+            android:gravity="end"
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@id/game_list_time_text"
             />

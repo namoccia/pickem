@@ -189,6 +189,14 @@ class GameAdapter extends BaseAdapter {
                 return R.drawable.ic_team_stars;
             case 30:
                 return R.drawable.ic_team_wild;
+            case 87:
+                return R.drawable.ic_team_all_star_atlantic;
+            case 88:
+                return R.drawable.ic_team_all_star_metro;
+            case 89:
+                return R.drawable.ic_team_all_star_central;
+            case 90:
+                return R.drawable.ic_team_all_star_pacific;
             default:
                 return R.drawable.ic_team_wild;
         }
@@ -236,10 +244,10 @@ class GameAdapter extends BaseAdapter {
             SpannableString str = new SpannableString(String.format("%d\n%d", game.getAwayTeam().getScore(), game.getHomeTeam().getScore()));
 
             if (game.getAwayTeam().getScore() > game.getHomeTeam().getScore()) {
-                str.setSpan(new StyleSpan(Typeface.BOLD), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                str.setSpan(new StyleSpan(Typeface.BOLD), 0, str.toString().indexOf('\n'), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             else if (game.getAwayTeam().getScore() < game.getHomeTeam().getScore()) {
-                str.setSpan(new StyleSpan(Typeface.BOLD), 2, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                str.setSpan(new StyleSpan(Typeface.BOLD), 2, str.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
 
             output = str;
