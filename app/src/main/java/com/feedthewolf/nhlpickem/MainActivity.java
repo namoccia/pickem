@@ -48,96 +48,29 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
 
-    private String currentUrlString;
+    private String mCurrentUrlString;
 
-    private String apiDate;
+    private String mApiDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //currentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
-        Date date = new Date();
-        //String apiDate = "2017-01-12";
-        apiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDate, apiDate);
+        initializePrivates();
 
         GameListJsonParser parser = new GameListJsonParser();
-        parser.execute(currentUrlString);
+        mSwipeRefreshLayout.setRefreshing(true);
+        parser.execute(mCurrentUrlString);
 
-        mDateHeading = (TextView) findViewById(R.id.date_heading_text_view);
         updateDateHeading();
-
-        // add hamburger menu to top of screen
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mActivityTitle = getTitle().toString();
-
         setupDrawer();
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-        // set up drawer
-        mDrawerList = (ListView)findViewById(R.id.left_drawer);
-        addDrawerItems();
-
-        mGameList = (ListView)findViewById(R.id.game_list);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshGameList);
-        mSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        //Log.i("REFRESH", "onRefresh called from SwipeRefreshLayout");
-
-                        // This method performs the actual data-refresh operation.
-                        // The method calls setRefreshing(false) when it's finished.
-                        refreshGameList();
-                    }
-                }
-        );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         refreshGameList();
-    }
-
-    private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
-        mDrawerList.setAdapter(mAdapter);
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation!");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
     }
 
     @Override
@@ -185,6 +118,83 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        mApiDate = String.format("%d-%02d-%d", year, month+1, day);
+        updateDateHeading();
+        refreshGameList();
+    }
+
+    private void initializePrivates() {
+        //mCurrentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
+        Date date = new Date();
+        //String mApiDate = "2017-01-12";
+
+        mApiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        mCurrentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", mApiDate, mApiDate);
+        mDateHeading = (TextView) findViewById(R.id.date_heading_text_view);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        mDrawerList = (ListView)findViewById(R.id.left_drawer);
+        mGameList = (ListView)findViewById(R.id.game_list);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshGameList);
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        //Log.i("REFRESH", "onRefresh called from SwipeRefreshLayout");
+
+                        // This method performs the actual data-refresh operation.
+                        // The method calls setRefreshing(false) when it's finished.
+                        refreshGameList();
+                    }
+                }
+        );
+    }
+
+    private void addDrawerItems() {
+        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
+    }
+
+    private void setupDrawer() {
+        // add hamburger menu to top of screen
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation!");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        addDrawerItems();
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
@@ -195,25 +205,18 @@ public class MainActivity extends AppCompatActivity
         mGameList.setAdapter(gameAdapter);
     }
 
-    private void refreshGameList()
-    {
-        currentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", apiDate, apiDate);
+    private void refreshGameList() {
+        mCurrentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", mApiDate, mApiDate);
 
         GameListJsonParser parser = new GameListJsonParser();
-        parser.execute(currentUrlString);
-    }
-
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        apiDate = String.format("%d-%02d-%d", year, month+1, day);
-        updateDateHeading();
-        refreshGameList();
+        mSwipeRefreshLayout.setRefreshing(true);
+        parser.execute(mCurrentUrlString);
     }
 
     public void updateDateHeading() {
         DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
         try {
-            Date selectedListDate = apiDateFormat.parse(apiDate);
+            Date selectedListDate = apiDateFormat.parse(mApiDate);
             Date dateToday = new Date();
             String headingDate = new SimpleDateFormat("MMM, d").format(selectedListDate);
             String headingDateToday = new SimpleDateFormat("MMM, d").format(dateToday);
@@ -225,7 +228,7 @@ public class MainActivity extends AppCompatActivity
                 mDateHeading.setText(headingDate);
             }
         } catch (ParseException e) {
-            mDateHeading.setText(apiDate);
+            mDateHeading.setText(mApiDate);
             e.printStackTrace();
         }
     }
@@ -235,12 +238,12 @@ public class MainActivity extends AppCompatActivity
 
         DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
         try {
-            Date selectedListDate = apiDateFormat.parse(apiDate);
+            Date selectedListDate = apiDateFormat.parse(mApiDate);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(selectedListDate);
             calendar.add(Calendar.DAY_OF_YEAR, -1);
 
-            apiDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            mApiDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             updateDateHeading();
             refreshGameList();
             //selectedListDate.
@@ -254,12 +257,12 @@ public class MainActivity extends AppCompatActivity
 
         DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
         try {
-            Date selectedListDate = apiDateFormat.parse(apiDate);
+            Date selectedListDate = apiDateFormat.parse(mApiDate);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(selectedListDate);
             calendar.add(Calendar.DAY_OF_YEAR, 1);
 
-            apiDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            mApiDate = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
             updateDateHeading();
             refreshGameList();
             //selectedListDate.
