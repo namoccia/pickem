@@ -101,7 +101,7 @@ class GameAdapter extends BaseAdapter {
 
     private int getColorResourceByPickStatus(Game game) {
         if(dbHelper.pickEntryAlreadyExistsForGameId(game.getGameId(), dbHelper) && game.hasGameFinished()) {
-            Cursor cursor = null;
+            Cursor cursor;
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             String sql = "SELECT * FROM picks WHERE gameId=" + game.getGameId();
             cursor = db.rawQuery(sql, null);
@@ -195,7 +195,7 @@ class GameAdapter extends BaseAdapter {
     }
 
     private String timeText(Game game) {
-        String output = "";
+        String output;
 
         // if game date is in the future then show the game time
         if (game.getDate().compareTo(new Date()) > 0) {

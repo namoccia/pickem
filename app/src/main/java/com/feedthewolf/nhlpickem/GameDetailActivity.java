@@ -72,7 +72,7 @@ public class GameDetailActivity extends AppCompatActivity {
         refreshGameDetails();
     }
 
-    protected void setUpperTextViews (Game game) {
+    private void setUpperTextViews(Game game) {
         TextView upperLeftTextView = (TextView) findViewById(R.id.upperLeftTextView);
         TextView upperCenterTextView = (TextView) findViewById(R.id.upperCenterTextView);
         TextView upperRightTextView = (TextView) findViewById(R.id.upperRightTextView);
@@ -101,7 +101,7 @@ public class GameDetailActivity extends AppCompatActivity {
         upperRightTextView.setText(rightText);
     }
 
-    protected void setAwayTeamBox (Game game) {
+    private void setAwayTeamBox(Game game) {
         ImageView awayLogo = (ImageView) findViewById(R.id.awayTeamImageView);
         TextView awayTeamNameView = (TextView) findViewById(R.id.awayTeamNameTextView);
         TextView awayTeamRecordView = (TextView) findViewById(R.id.awayTeamRecordTextView);
@@ -120,7 +120,7 @@ public class GameDetailActivity extends AppCompatActivity {
 
     }
 
-    protected void setHomeTeamBox(Game game) {
+    private void setHomeTeamBox(Game game) {
         ImageView homeLogo = (ImageView) findViewById(R.id.homeTeamImageView);
         TextView homeTeamNameView = (TextView) findViewById(R.id.homeTeamNameTextView);
         TextView homeTeamRecordView = (TextView) findViewById(R.id.homeTeamRecordTextView);
@@ -138,7 +138,7 @@ public class GameDetailActivity extends AppCompatActivity {
         }
     }
 
-    protected void refreshGameDetails() {
+    private void refreshGameDetails() {
         //Date date = new Date();
         //String apiDate = "2017-01-12";
         //String apiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -148,7 +148,7 @@ public class GameDetailActivity extends AppCompatActivity {
         parser.execute(currentUrlString);
     }
 
-    protected void setPickButtons(final Game game) {
+    private void setPickButtons(final Game game) {
         final ToggleButton awayTeamButton = (ToggleButton) findViewById(R.id.awayTeamToggleButton);
         final ToggleButton homeTeamButton = (ToggleButton) findViewById(R.id.homeTeamToggleButton);
         final ImageView lockImageView = (ImageView) findViewById(R.id.lockImageView);
@@ -162,7 +162,7 @@ public class GameDetailActivity extends AppCompatActivity {
         homeTeamButton.setTextOn(game.getHomeTeam().getName());
 
         if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)) {
-            Cursor cursor = null;
+            Cursor cursor;
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             String sql = "SELECT * FROM picks WHERE gameId=" + gameId;
             cursor = db.rawQuery(sql, null);
@@ -225,7 +225,7 @@ public class GameDetailActivity extends AppCompatActivity {
         // Update result in database once game is over
         if (game.getStatus().equalsIgnoreCase("Final")) {
             if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)) {
-                Cursor cursor = null;
+                Cursor cursor;
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 String sql = "SELECT * FROM picks WHERE gameId=" + gameId;
                 cursor = db.rawQuery(sql, null);
@@ -246,7 +246,7 @@ public class GameDetailActivity extends AppCompatActivity {
         }
     }
 
-    protected void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame) {
+    private void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)){

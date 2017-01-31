@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void showDatePickerDialog() {
+    private void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
     }
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity
         parser.execute(mCurrentUrlString);
     }
 
-    public void updateDateHeading() {
+    private void updateDateHeading() {
         DateFormat apiDateFormat = new SimpleDateFormat("yyyy'-'MM'-'dd");
         try {
             Date selectedListDate = apiDateFormat.parse(mApiDate);

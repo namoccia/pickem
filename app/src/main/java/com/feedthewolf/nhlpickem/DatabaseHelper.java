@@ -51,7 +51,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     boolean pickEntryAlreadyExistsForGameId(int gameId, DatabaseHelper dbHelper) {
-        Cursor cursor = null;
+        Cursor cursor;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String sql = "SELECT gameId FROM picks WHERE gameId=" + gameId;
         cursor = db.rawQuery(sql, null);

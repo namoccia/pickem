@@ -192,7 +192,6 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/lockImageView"
-                android:layout_weight="1"
                 android:alpha="0.2"
                 android:visibility="invisible"/>
 
