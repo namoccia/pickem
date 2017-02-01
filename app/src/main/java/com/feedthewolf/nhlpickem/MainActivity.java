@@ -2,6 +2,7 @@ package com.feedthewolf.nhlpickem;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Android", "iOS", "Windows", "OS X", "Linux" };
+        String[] osArray = { "Stats", "Settings", "About" };
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
@@ -190,7 +191,31 @@ public class MainActivity extends AppCompatActivity
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+
+                switch (position) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, "Stats", Toast.LENGTH_SHORT).show();
+
+                        Intent statsIntent = new Intent(MainActivity.this, StatsActivity.class);
+                        getBaseContext().startActivity(statsIntent);
+
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
+
+                        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                        getBaseContext().startActivity(settingsIntent);
+
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+
+                        Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+                        getBaseContext().startActivity(aboutIntent);
+
+                        break;
+                }
+
             }
         });
     }
