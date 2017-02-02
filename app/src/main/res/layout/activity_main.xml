@@ -61,9 +61,21 @@ android:layout_height="match_parent">
             <ListView
                 android:id="@+id/game_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:layout_below="@id/sub_header_relative_layout"
+            android:paddingTop="15dp"
+            android:id="@+id/empty_game_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:text="@string/no_game_data"
+            android:visibility="gone"
+            />
+
     </RelativeLayout>
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"

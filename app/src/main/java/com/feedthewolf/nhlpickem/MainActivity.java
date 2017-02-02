@@ -40,17 +40,17 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener {
 
-    private ListView mDrawerList;
     private ListView mGameList;
+    private TextView mEmptyListView;
     private TextView mDateHeading;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
     private String mActivityTitle;
-
     private String mCurrentUrlString;
-
     private String mApiDate;
 
     @Override
@@ -138,6 +138,9 @@ public class MainActivity extends AppCompatActivity
         mActivityTitle = getTitle().toString();
         mDrawerList = (ListView)findViewById(R.id.left_drawer);
         mGameList = (ListView)findViewById(R.id.game_list);
+        mEmptyListView = (TextView)findViewById(R.id.empty_game_list);
+
+        mGameList.setEmptyView(mEmptyListView);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshGameList);
         mSwipeRefreshLayout.setOnRefreshListener(
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation!");
+                getSupportActionBar().setTitle("Menu");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -194,25 +197,16 @@ public class MainActivity extends AppCompatActivity
 
                 switch (position) {
                     case 0:
-                        Toast.makeText(MainActivity.this, "Stats", Toast.LENGTH_SHORT).show();
-
                         Intent statsIntent = new Intent(MainActivity.this, StatsActivity.class);
                         getBaseContext().startActivity(statsIntent);
-
                         break;
                     case 1:
-                        Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
-
                         Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                         getBaseContext().startActivity(settingsIntent);
-
                         break;
                     case 2:
-                        Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
-
                         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
                         getBaseContext().startActivity(aboutIntent);
-
                         break;
                 }
 
@@ -228,6 +222,17 @@ public class MainActivity extends AppCompatActivity
     private void addGamesToList(ArrayList<Game> objects) {
         GameAdapter gameAdapter = new GameAdapter(this, objects);
         mGameList.setAdapter(gameAdapter);
+
+        /*
+        if (objects.size()==0) {
+            mGameList.setVisibility(View.GONE);
+            mEmptyListView.setVisibility(View.VISIBLE);
+        }
+        else {
+            mGameList.setVisibility(View.VISIBLE);
+            mEmptyListView.setVisibility(View.GONE);
+        }
+        */
     }
 
     private void refreshGameList() {
