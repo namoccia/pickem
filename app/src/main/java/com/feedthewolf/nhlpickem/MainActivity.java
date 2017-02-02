@@ -222,17 +222,6 @@ public class MainActivity extends AppCompatActivity
     private void addGamesToList(ArrayList<Game> objects) {
         GameAdapter gameAdapter = new GameAdapter(this, objects);
         mGameList.setAdapter(gameAdapter);
-
-        /*
-        if (objects.size()==0) {
-            mGameList.setVisibility(View.GONE);
-            mEmptyListView.setVisibility(View.VISIBLE);
-        }
-        else {
-            mGameList.setVisibility(View.VISIBLE);
-            mEmptyListView.setVisibility(View.GONE);
-        }
-        */
     }
 
     private void refreshGameList() {
