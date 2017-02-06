@@ -1,8 +1,13 @@
 package com.feedthewolf.nhlpickem;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.v4.widget.DrawerLayout;
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     private String mCurrentUrlString;
     private String mApiDate;
 
+    private SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +73,7 @@ public class MainActivity extends AppCompatActivity
 
         updateDateHeading();
         setupDrawer();
+        createNotificationManager();
     }
 
     @Override
@@ -129,9 +137,31 @@ public class MainActivity extends AppCompatActivity
     private void initializePrivates() {
         //mCurrentUrlString = "https://statsapi.web.nhl.com/api/v1/teams/30";
         Date date = new Date();
-        //String mApiDate = "2017-01-12";
-
+        //mApiDate = "2017-01-14";
         mApiDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
+        mSharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        if(mSharedPreferences.getString(getString(R.string.preference_today_date), "null").equalsIgnoreCase("null")) {
+            // if todayDate preference does not exist, initialize it and hasRemindedToday
+            editor.putString(getString(R.string.preference_today_date), mApiDate);
+            editor.putBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false);
+        }
+        else if(mSharedPreferences.getString(getString(R.string.preference_today_date), "null").equalsIgnoreCase(mApiDate)){
+            // if todayDate has already been set to today
+            boolean test = !mSharedPreferences.getBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false);
+            if(!mSharedPreferences.getBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false)) {
+
+            }
+        }
+        else {
+            // if todayDate has been initialized and does not equal today, then set hasRemindedToday to false
+            editor.putString(getString(R.string.preference_today_date), mApiDate);
+            editor.putBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false);
+        }
+        editor.apply();
+
         mCurrentUrlString = String.format("https://statsapi.web.nhl.com/api/v1/schedule?startDate=%s&endDate=%s&expand=schedule.teams,schedule.linescore", mApiDate, mApiDate);
         mDateHeading = (TextView) findViewById(R.id.date_heading_text_view);
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
@@ -155,6 +185,21 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
         );
+    }
+
+    private void createNotificationManager() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 12);
+        cal.set(Calendar.MINUTE, 25);
+
+        Intent intent = new Intent(getApplicationContext(), Notification_Reciever.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
 
     private void addDrawerItems() {
@@ -332,6 +377,15 @@ public class MainActivity extends AppCompatActivity
                 JSONObject jObj = new JSONObject(result);
                 //Toast.makeText(MainActivity.this, "From API: " + jObj.getJSONArray("teams").getJSONObject(0).getString("name"), Toast.LENGTH_LONG).show();
                 int numberOfGames = jObj.getInt("totalGames");
+                if( mSharedPreferences.getString(getString(R.string.preference_today_date), "null").equalsIgnoreCase(mApiDate)) {
+                    SharedPreferences.Editor editor = mSharedPreferences.edit();
+                    if (numberOfGames == 0)
+                        editor.putBoolean(getString(R.string.preference_are_there_games_today), false);
+                    else
+                        editor.putBoolean(getString(R.string.preference_are_there_games_today), true);
+
+                    editor.apply();
+                }
 
                 ArrayList<Game> gameList = new ArrayList<>();
                 for(int currentGame = 0; currentGame < numberOfGames; currentGame++) {

@@ -3,6 +3,8 @@
     package="com.feedthewolf.nhlpickem">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +50,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <receiver android:name=".Notification_Reciever" />
     </application>
 
 </manifest>
