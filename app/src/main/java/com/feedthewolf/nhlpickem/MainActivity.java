@@ -79,6 +79,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
+        Date date = new Date();
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        String todaysDateString = new SimpleDateFormat("yyyy-MM-dd").format(date);
+
+        if(!mSharedPreferences.getString(getString(R.string.preference_today_date), "null").equalsIgnoreCase(todaysDateString)) {
+            // if app has not been destroyed before a new date occurs, then the app update the date
+            // and reminder preferences during onStart
+            editor.putString(getString(R.string.preference_today_date), todaysDateString);
+            editor.putBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false);
+        }
+        editor.apply();
+
         refreshGameList();
     }
 
@@ -150,10 +163,13 @@ public class MainActivity extends AppCompatActivity
         }
         else if(mSharedPreferences.getString(getString(R.string.preference_today_date), "null").equalsIgnoreCase(mApiDate)){
             // if todayDate has already been set to today
+
+            /*
             boolean test = !mSharedPreferences.getBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false);
             if(!mSharedPreferences.getBoolean(getString(R.string.preference_has_pick_reminder_been_sent_today), false)) {
 
             }
+            */
         }
         else {
             // if todayDate has been initialized and does not equal today, then set hasRemindedToday to false

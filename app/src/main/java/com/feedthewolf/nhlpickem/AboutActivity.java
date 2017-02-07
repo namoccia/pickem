@@ -1,6 +1,5 @@
 package com.feedthewolf.nhlpickem;
 
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -20,13 +19,6 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        /*
-        PickReminderNotification testNotify = new PickReminderNotification();
-        synchronized (testNotify) {
-            testNotify.notify(this, 2);
-        }
-
-        */
     }
 
     @Override
