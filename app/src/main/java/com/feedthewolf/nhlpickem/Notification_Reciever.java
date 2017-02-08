@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Created by nmoccia on 2/3/2017.
@@ -21,11 +22,15 @@ public class Notification_Reciever extends BroadcastReceiver{
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 101, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        SharedPreferences settingsPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean notificationsEnabled = settingsPreferences.getBoolean("notifications_reminder", true);
+
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if (    !sharedPreferences.getBoolean(context.getResources().getString(R.string.preference_has_pick_reminder_been_sent_today), false) &&
-                sharedPreferences.getBoolean(context.getResources().getString(R.string.preference_are_there_games_today), false))
+                sharedPreferences.getBoolean(context.getResources().getString(R.string.preference_are_there_games_today), false) &&
+                notificationsEnabled)
         {
             notificationManager.notify(101, pickReminderNotification.build(context, 1));
             editor.putBoolean(context.getResources().getString(R.string.preference_has_pick_reminder_been_sent_today), true);
