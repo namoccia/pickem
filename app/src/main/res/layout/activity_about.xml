@@ -10,4 +10,54 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.feedthewolf.nhlpickem.AboutActivity">
 
+    <TextView
+        android:text="@string/about_the_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/aboutAppTextView"
+        tools:text="About Text" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutAppTextView"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:id="@+id/appVersionTextView"
+        tools:text="App Version" />
+
+    <TextView
+        android:text="@string/feedback_call_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appVersionTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:id="@+id/feedbackCalloutTextView"
+        tools:text="Feedback Call Out" />
+
+    <Button
+        android:text="@string/feedback_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/feedbackCalloutTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
+        android:id="@+id/feedbackButton"
+        tools:text="Feedback Button" />
+
+    <TextView
+        android:text="@string/trademark_disclosure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/trademarkTextView"
+        tools:text="legal stuff" />
+
 </RelativeLayout>
