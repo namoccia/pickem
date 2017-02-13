@@ -32,6 +32,23 @@ public class DatePickerFragment extends DialogFragment
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        /*
+        if (context instanceof Activity){
+            a=(Activity) context;
+        }
+        */
+
+        try {
+            mCallback = (DatePickerDialog.OnDateSetListener) activity;
+        }catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+        }
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
