@@ -9,6 +9,11 @@
     <string name="title_activity_stats">Stats</string>
     <string name="no_game_data">There is no game data available for this date.</string>
 
+    <!-- Strings related to Stats page -->
+    <string name="totalPicks">Total picks:</string>
+    <string name="correctPicks">Correct picks:</string>
+    <string name="correctPercentage">Correct percentage:</string>
+
     <!-- Strings related to About page -->
     <string name="dev_email">feedthewolfdev@gmail.com</string>
     <string name="feedback_call_out">Have a suggestion for the app? Found a bug? Just want to say hello? Please feel free to leave feedback!</string>

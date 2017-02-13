@@ -1,6 +1,5 @@
 package com.feedthewolf.nhlpickem;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -220,7 +219,7 @@ public class GameDetailActivity extends AppCompatActivity {
                     awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
                     awayTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
 
-                    updatePickInDatabase(game.getGameId(), "away", "none");
+                    dbHelper.updatePickInDatabase(game.getGameId(), "away", "none", dbHelper);
                 }
                 else {
                     awayTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.windowBackground));
@@ -236,7 +235,7 @@ public class GameDetailActivity extends AppCompatActivity {
                     homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.colorPrimary));
                     homeTeamButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.textColorPrimary));
 
-                    updatePickInDatabase(game.getGameId(), "home", "none");
+                    dbHelper.updatePickInDatabase(game.getGameId(), "home", "none", dbHelper);
                 }
                 else {
                     homeTeamButton.setBackgroundColor(ContextCompat.getColor(getBaseContext(), R.color.windowBackground));
@@ -267,38 +266,12 @@ public class GameDetailActivity extends AppCompatActivity {
                 String winner = game.getWinnerForDatabase();
 
                 if (currentSelection.equalsIgnoreCase("away")) {
-                    updatePickInDatabase(game.getGameId(), "away", winner);
+                    dbHelper.updatePickInDatabase(game.getGameId(), "away", winner, dbHelper);
                 }
                 else if (currentSelection.equalsIgnoreCase("home")) {
-                    updatePickInDatabase(game.getGameId(), "home", winner);
+                    dbHelper.updatePickInDatabase(game.getGameId(), "home", winner, dbHelper);
                 }
             }
-        }
-    }
-
-    private void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)){
-            //PID Found
-
-            ContentValues values = new ContentValues();
-            values.put("selection", currentSelection);
-            values.put("result", resultOfGame);
-
-            // Which row to update, based on the title
-            String selection = "gameId=" + gameId;
-
-            db.update("picks", values, selection, null);
-        }else{
-            //PID Not Found
-
-            ContentValues values = new ContentValues();
-            values.put("gameId", gameId);
-            values.put("selection", currentSelection);
-            values.put("result", resultOfGame);
-
-            db.insert("picks", null, values);
         }
     }
 

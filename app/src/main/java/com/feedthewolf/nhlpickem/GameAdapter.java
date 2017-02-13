@@ -102,7 +102,7 @@ class GameAdapter extends BaseAdapter {
     private int getColorResourceByPickStatus(Game game) {
         if(dbHelper.pickEntryAlreadyExistsForGameId(game.getGameId(), dbHelper) && game.hasGameFinished()) {
             Cursor cursor;
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
             String sql = "SELECT * FROM picks WHERE gameId=" + game.getGameId();
             cursor = db.rawQuery(sql, null);
 
@@ -113,10 +113,13 @@ class GameAdapter extends BaseAdapter {
             String winner = game.getWinnerForDatabase();
 
             if (!currentSelection.equalsIgnoreCase("none") && !winner.equalsIgnoreCase("none")) {
-                if (currentSelection.equalsIgnoreCase(winner))
+                dbHelper.updatePickInDatabase(game.getGameId(), currentSelection, winner, dbHelper);
+
+                if (currentSelection.equalsIgnoreCase(winner)) {
                     return R.color.correctPickListBackground;
-                else
+                } else {
                     return R.color.incorrectPickListBackground;
+                }
             }
             else {
                 return R.color.windowBackground;

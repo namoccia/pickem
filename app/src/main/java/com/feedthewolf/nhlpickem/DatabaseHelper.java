@@ -1,9 +1,12 @@
 package com.feedthewolf.nhlpickem;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by nmoccia on 1/12/2017.
@@ -59,6 +62,84 @@ class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return cursorCount>0;
+    }
+
+    int getTotalNumberOfPicks(DatabaseHelper dbHelper) {
+        Cursor cursor;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String sql = "SELECT count(*) FROM picks WHERE selection<>'none' AND " +
+                        "(result='home' OR result='away')";
+        cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        int cursorCount = cursor.getInt(0);
+        cursor.close();
+
+        return cursorCount;
+    }
+
+    int getTotalCorrectPicks(DatabaseHelper dbHelper) {
+        Cursor cursor;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        int numberCorrect = 0;
+
+        String sql = "SELECT * FROM picks WHERE selection<>'none' AND result<>'none'";
+        cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            if (cursor.getString(cursor.getColumnIndex("selection"))
+                    .equalsIgnoreCase(cursor.getString(cursor.getColumnIndex("result")))) {
+                numberCorrect++;
+            }
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return numberCorrect;
+    }
+
+    ArrayList<Integer> getGameIdsWithNoneAsResult(DatabaseHelper dbHelper) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+
+        Cursor cursor;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String sql = "SELECT gameId FROM picks WHERE selection<>'none' AND result='none'";
+        cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            result.add(cursor.getInt(cursor.getColumnIndex("gameId")));
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return result;
+    }
+
+    void updatePickInDatabase(int gameId, String currentSelection, String resultOfGame, DatabaseHelper dbHelper) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        if(dbHelper.pickEntryAlreadyExistsForGameId(gameId, dbHelper)){
+            //PID Found
+
+            ContentValues values = new ContentValues();
+            values.put("selection", currentSelection);
+            values.put("result", resultOfGame);
+
+            // Which row to update, based on the title
+            String selection = "gameId=" + gameId;
+
+            db.update("picks", values, selection, null);
+        }else{
+            //PID Not Found
+
+            ContentValues values = new ContentValues();
+            values.put("gameId", gameId);
+            values.put("selection", currentSelection);
+            values.put("result", resultOfGame);
+
+            db.insert("picks", null, values);
+        }
     }
 
     @Override
