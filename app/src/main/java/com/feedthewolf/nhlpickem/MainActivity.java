@@ -260,15 +260,15 @@ public class MainActivity extends AppCompatActivity
                 switch (position) {
                     case 0:
                         Intent statsIntent = new Intent(MainActivity.this, StatsActivity.class);
-                        getBaseContext().startActivity(statsIntent);
+                        MainActivity.this.startActivity(statsIntent);
                         break;
                     case 1:
                         Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                        getBaseContext().startActivity(settingsIntent);
+                        MainActivity.this.startActivity(settingsIntent);
                         break;
                     case 2:
                         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
-                        getBaseContext().startActivity(aboutIntent);
+                        MainActivity.this.startActivity(aboutIntent);
                         break;
                 }
 
