@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Nick on 1/14/2017.
@@ -28,7 +29,20 @@ public class DatePickerFragment extends DialogFragment
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(2017, Calendar.JUNE, 17, c.get(Calendar.HOUR), c.get(Calendar.MINUTE), c.get(Calendar.SECOND));
+        Date maxDate = cal.getTime();
+
+        cal.set(2016, Calendar.OCTOBER, 12, c.get(Calendar.HOUR), c.get(Calendar.MINUTE), c.get(Calendar.SECOND));
+        Date minDate = cal.getTime();
+
+        dialog.getDatePicker().setMinDate(minDate.getTime());
+        dialog.getDatePicker().setMaxDate(maxDate.getTime());
+
+        return dialog;
     }
 
     @Override
