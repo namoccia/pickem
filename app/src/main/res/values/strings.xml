@@ -96,7 +96,7 @@
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_reminder_notifications">Pick reminder notifications</string>
+    <string name="pref_title_reminder_notifications">Pick reminders</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>

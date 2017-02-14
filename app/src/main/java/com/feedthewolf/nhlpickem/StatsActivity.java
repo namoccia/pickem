@@ -81,11 +81,19 @@ public class StatsActivity extends AppCompatActivity {
         mCorrectPicksNumberView =       (TextView)findViewById(R.id.correctPicksNumberTextView);
         mCorrectPercentageNumberView =  (TextView)findViewById(R.id.correctPercentNumberTextView);
 
-        mTotalPicksNumberView.setText(Integer.toString(dbHelper.getTotalNumberOfPicks(dbHelper)));
-        mCorrectPicksNumberView.setText(Integer.toString(dbHelper.getTotalCorrectPicks(dbHelper)));
-        mCorrectPercentageNumberView.setText(
-                String.format("%.1f",
-                            ((double)dbHelper.getTotalCorrectPicks(dbHelper) / (double)dbHelper.getTotalNumberOfPicks(dbHelper))*100 ) + '%');
+        int totalPicks = dbHelper.getTotalNumberOfPicks(dbHelper);
+        int correctPicks = dbHelper.getTotalCorrectPicks(dbHelper);
+
+        mTotalPicksNumberView.setText(Integer.toString(totalPicks));
+        mCorrectPicksNumberView.setText(Integer.toString(correctPicks));
+        if(totalPicks == 0) {
+            mCorrectPercentageNumberView.setText("0%");
+        }
+        else {
+            mCorrectPercentageNumberView.setText(
+                    String.format("%.1f",
+                            ((double) totalPicks / (double) correctPicks) * 100) + '%');
+        }
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshStats);
         mSwipeRefreshLayout.setOnRefreshListener(
@@ -119,11 +127,19 @@ public class StatsActivity extends AppCompatActivity {
             super.onPostExecute(result);
             //parseing all details
 
-            mTotalPicksNumberView.setText(Integer.toString(dbHelper.getTotalNumberOfPicks(dbHelper)));
-            mCorrectPicksNumberView.setText(Integer.toString(dbHelper.getTotalCorrectPicks(dbHelper)));
-            mCorrectPercentageNumberView.setText(
-                    String.format("%.1f",
-                            ((double)dbHelper.getTotalCorrectPicks(dbHelper) / (double)dbHelper.getTotalNumberOfPicks(dbHelper))*100 ) + '%');
+            int totalPicks = dbHelper.getTotalNumberOfPicks(dbHelper);
+            int correctPicks = dbHelper.getTotalCorrectPicks(dbHelper);
+
+            mTotalPicksNumberView.setText(Integer.toString(totalPicks));
+            mCorrectPicksNumberView.setText(Integer.toString(correctPicks));
+            if(totalPicks == 0) {
+                mCorrectPercentageNumberView.setText("0%");
+            }
+            else {
+                mCorrectPercentageNumberView.setText(
+                        String.format("%.1f",
+                                ((double) totalPicks / (double) correctPicks) * 100) + '%');
+            }
 
             ArrayList<Integer> gameIdsWithNoneAsResult = dbHelper.getGameIdsWithNoneAsResult(dbHelper);
             TextView numWithNoneAsResultView = (TextView)findViewById(R.id.gameIdsWithNoneAsResultTextView);

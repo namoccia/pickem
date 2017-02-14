@@ -4,16 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -76,8 +81,21 @@ class GameAdapter extends BaseAdapter {
 
         final Game game = (Game) getItem(position);
 
-        awayTextView.setText(game.getAwayTeam().toString());
-        homeTextView.setText(game.getHomeTeam().toString());
+        WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+
+        if(width < 1080) {
+            awayTextView.setText(game.getAwayTeam().getName());
+            homeTextView.setText(game.getHomeTeam().getName());
+        }
+        else {
+            awayTextView.setText(game.getAwayTeam().toString());
+            homeTextView.setText(game.getHomeTeam().toString());
+        }
+
         scoreTextView.setText(scoreText(game));
         timeTextView.setText(timeText(game));
         awayLogo.setImageResource(getImageResourceIdByTeamId(game.getAwayTeam().getId()));
