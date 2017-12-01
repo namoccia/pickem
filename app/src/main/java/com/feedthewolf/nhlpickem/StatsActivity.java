@@ -92,7 +92,7 @@ public class StatsActivity extends AppCompatActivity {
         else {
             mCorrectPercentageNumberView.setText(
                     String.format("%.1f",
-                            ((double) totalPicks / (double) correctPicks) * 100) + '%');
+                            ((double) correctPicks / (double) totalPicks) * 100) + '%');
         }
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshStats);
@@ -138,7 +138,7 @@ public class StatsActivity extends AppCompatActivity {
             else {
                 mCorrectPercentageNumberView.setText(
                         String.format("%.1f",
-                                ((double) totalPicks / (double) correctPicks) * 100) + '%');
+                                ((double) correctPicks / (double) totalPicks) * 100) + '%');
             }
 
             ArrayList<Integer> gameIdsWithNoneAsResult = dbHelper.getGameIdsWithNoneAsResult(dbHelper);

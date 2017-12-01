@@ -96,7 +96,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/gameIdsWithNoneAsResultTextView"
-            tools:text="game ids with none as result" />
+            tools:text="game ids with none as result"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

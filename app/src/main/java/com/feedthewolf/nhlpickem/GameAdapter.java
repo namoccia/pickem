@@ -101,6 +101,9 @@ class GameAdapter extends BaseAdapter {
         awayLogo.setImageResource(getImageResourceIdByTeamId(game.getAwayTeam().getId()));
         homeLogo.setImageResource(getImageResourceIdByTeamId(game.getHomeTeam().getId()));
 
+        //awayLogo.setVisibility(View.GONE);
+        //homeLogo.setVisibility(View.GONE);
+
         rowView.setBackgroundColor(ContextCompat.getColor(mContext, getColorResourceByPickStatus(game)));
 
         rowView.setOnClickListener(new View.OnClickListener() {

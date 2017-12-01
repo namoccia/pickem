@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -140,6 +141,8 @@ public class GameDetailActivity extends AppCompatActivity {
         awayTeamNameView.setText(game.getAwayTeam().getName());
         awayTeamRecordView.setText(game.getAwayTeam().getLeagueRecord().toString());
 
+        //awayLogo.setVisibility(View.INVISIBLE);
+
         if (game.getStatus().equalsIgnoreCase("Preview")) {
             awayTeamScore.setText("");
         }
@@ -158,6 +161,8 @@ public class GameDetailActivity extends AppCompatActivity {
         homeLogo.setImageResource(GameAdapter.getImageResourceIdByTeamId(game.getHomeTeam().getId()));
         homeTeamNameView.setText(game.getHomeTeam().getName());
         homeTeamRecordView.setText(game.getHomeTeam().getLeagueRecord().toString());
+
+        //homeLogo.setVisibility(View.INVISIBLE);
 
         if (game.getStatus().equalsIgnoreCase("Preview")) {
             homeTeamScore.setText("");

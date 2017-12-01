@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NHL Pick \'Em</string>
+    <string name="app_name">Hockey Pick \'Em</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="today">Today</string>
@@ -19,11 +19,11 @@
     <string name="feedback_call_out">Have a suggestion for the app? Found a bug? Just want to say hello? Please feel free to leave feedback!</string>
     <string name="feedback_button">Send Feedback</string>
     <string name="send_feedback_title">Send a feedback email via:</string>
-    <string name="send_feedback_email_subject">NHL Pick \'Em Feedback</string>
+    <string name="send_feedback_email_subject">Hockey Pick \'Em Feedback</string>
     <string name="send_feedback_email_body">Hello developer!\n\nHere\'s some feedback that I have for your app:\n</string>
 
-    <string name="about_the_app">NHL Pick \'Em is developed and maintained by <i>Feed The Wolf</i>, a casual Android developer and passionate hockey fan.</string>
-    <string name="trademark_disclosure">This app is not endorsed by or affiliated with the National Hockey League. Any trademarks used in the app are done so under fair use with the sole purpose of identifying the respective entities and remain the propery of their respective owners.</string>
+    <string name="about_the_app">Hockey Pick \'Em is developed and maintained by <i>Feed The Wolf</i>, a casual Android developer and passionate hockey fan.</string>
+    <string name="trademark_disclosure">This app is not endorsed by or affiliated with the National Hockey League. Any trademarks used in the app are done so under fair use with the sole purpose of identifying the respective entities and remain the property of their respective owners.</string>
 
     <!-- Strings related to Settings -->
 
@@ -103,7 +103,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
 
-    <string name="pick_reminder_notification_title">Make your NHL picks</string>
+    <string name="pick_reminder_notification_title">Make your hockey picks</string>
 
     <!-- TODO: remove this placeholder text -->
     <string name="pick_reminder_notification_text">Be sure to get your picks in for today\'s games!
