@@ -179,6 +179,8 @@ class GameAdapter extends BaseAdapter {
                 return R.drawable.ic_team_flames;
             case 4:
                 return R.drawable.ic_team_flyers;
+            case 54:
+                return R.drawable.ic_team_golden_knights;
             case 12:
                 return R.drawable.ic_team_hurricanes;
             case 2:

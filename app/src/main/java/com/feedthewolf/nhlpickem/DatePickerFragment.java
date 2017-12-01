@@ -39,8 +39,8 @@ public class DatePickerFragment extends DialogFragment
         cal.set(2016, Calendar.OCTOBER, 12, c.get(Calendar.HOUR), c.get(Calendar.MINUTE), c.get(Calendar.SECOND));
         Date minDate = cal.getTime();
 
-        dialog.getDatePicker().setMinDate(minDate.getTime());
-        dialog.getDatePicker().setMaxDate(maxDate.getTime());
+        //dialog.getDatePicker().setMinDate(minDate.getTime());
+        //dialog.getDatePicker().setMaxDate(maxDate.getTime());
 
         return dialog;
     }
