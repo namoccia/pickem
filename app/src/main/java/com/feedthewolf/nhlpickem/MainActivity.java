@@ -220,8 +220,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Stats", "Settings", "About" };
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, osArray);
+        String[] drawerItems = { "Standings", "Stats", "Settings", "About" };
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, drawerItems);
         mDrawerList.setAdapter(mAdapter);
     }
 
@@ -257,16 +257,20 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                switch (position) {
+                switch (position) { // StandingsActivity
                     case 0:
+                        Intent standingsIntent = new Intent(MainActivity.this, StandingsActivity.class);
+                        MainActivity.this.startActivity(standingsIntent);
+                        break;
+                    case 1:
                         Intent statsIntent = new Intent(MainActivity.this, StatsActivity.class);
                         MainActivity.this.startActivity(statsIntent);
                         break;
-                    case 1:
+                    case 2:
                         Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                         MainActivity.this.startActivity(settingsIntent);
                         break;
-                    case 2:
+                    case 3:
                         Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
                         MainActivity.this.startActivity(aboutIntent);
                         break;
