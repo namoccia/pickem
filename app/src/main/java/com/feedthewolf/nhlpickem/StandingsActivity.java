@@ -1,6 +1,7 @@
 package com.feedthewolf.nhlpickem;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 
 public class StandingsActivity extends AppCompatActivity {
 
@@ -158,6 +171,55 @@ public class StandingsActivity extends AppCompatActivity {
         public int getCount() {
             // Show 4 total pages.
             return 4;
+        }
+    }
+
+    private class StandingsJsonParser extends AsyncTask<String, Void, String> {
+        final String TAG = "StandingsJsonParser";
+        HttpURLConnection urlConnection;
+
+        @Override
+        protected String doInBackground(String... urls) {
+            StringBuilder result = new StringBuilder();
+
+            try {
+                URL url = new URL(urls[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+
+            }catch( Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                urlConnection.disconnect();
+            }
+
+            return result.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            try {
+                JSONObject jObj = new JSONObject(result);
+                JSONArray recordsArray = jObj.getJSONArray("records");
+
+                ArrayList<TeamStanding> teamStandingArrayList = new ArrayList<>();
+
+                // for each record (one for each division)
+                // go through and get each teamRecord (from teamRecords array)
+            } catch (Exception e) {
+                Log.e(TAG, "Error parsing data " + e.toString());
+            }
+
         }
     }
 }
