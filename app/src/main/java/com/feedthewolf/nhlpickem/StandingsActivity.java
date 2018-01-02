@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,6 +77,7 @@ public class StandingsActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        refreshStandings();
     }
 
 
@@ -113,6 +115,13 @@ public class StandingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshStandings() {
+        String standingsUrl = "https://statsapi.web.nhl.com/api/v1/standings";
+
+        StandingsJsonParser parser = new StandingsJsonParser();
+        parser.execute(standingsUrl);
     }
 
     /**
@@ -216,6 +225,23 @@ public class StandingsActivity extends AppCompatActivity {
 
                 // for each record (one for each division)
                 // go through and get each teamRecord (from teamRecords array)
+
+                for(int i=0; i<recordsArray.length(); i++) {
+                    int divId = recordsArray.getJSONObject(i).getJSONObject("division").getInt("id");
+                    String divName = recordsArray.getJSONObject(i).getJSONObject("division").getString("name");
+
+                    JSONArray teamRecordsArray = recordsArray.getJSONObject(i).getJSONArray("teamRecords");
+                    for(int k=0; k<teamRecordsArray.length(); k++) {
+                        TeamStanding newStanding;
+                        newStanding = TeamStanding.teamStandingFromJSON(divId, divName, teamRecordsArray.getJSONObject(k));
+
+                        teamStandingArrayList.add(newStanding);
+                    }
+                }
+
+                String toastText = teamStandingArrayList.get(0).teamName;
+                Toast.makeText(getApplicationContext(), toastText,
+                        Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 Log.e(TAG, "Error parsing data " + e.toString());
             }

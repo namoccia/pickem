@@ -43,7 +43,7 @@ public class TeamStanding {
         this.gamesPlayed = gamesPlayed;
     }
 
-    public TeamStanding teamStandingFromJSON(int divId, String divName, JSONObject json) {
+    static TeamStanding teamStandingFromJSON(int divId, String divName, JSONObject json) {
         try {
             LeagueRecord record = new LeagueRecord(
                     json.getJSONObject("leagueRecord").getInt("wins"),
