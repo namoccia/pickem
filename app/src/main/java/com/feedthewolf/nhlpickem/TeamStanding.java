@@ -1,5 +1,7 @@
 package com.feedthewolf.nhlpickem;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -8,7 +10,7 @@ import org.json.JSONObject;
  * Created by Nick on 12/16/2017.
  */
 
-public class TeamStanding {
+public class TeamStanding implements Parcelable{
     public int divisionId;
     public String divisionName;
     public LeagueRecord teamRecord;
@@ -43,6 +45,23 @@ public class TeamStanding {
         this.gamesPlayed = gamesPlayed;
     }
 
+    public TeamStanding(Parcel in) {
+        this.divisionId = in.readInt();
+        this.divisionName = in.readString();
+        this.teamRecord = in.readParcelable(LeagueRecord.class.getClassLoader());
+        this.teamId = in.readInt();
+        this.teamName = in.readString();
+        this.goalsAgainst = in.readInt();
+        this.goalsScored = in.readInt();
+        this.points = in.readInt();
+        this.divisionRank = in.readInt();
+        this.conferenceRank = in.readInt();
+        this.leagueRank = in.readInt();
+        this.wildCardRank = in.readInt();
+        this.row = in.readInt();
+        this.gamesPlayed = in.readInt();
+    }
+
     static TeamStanding teamStandingFromJSON(int divId, String divName, JSONObject json) {
         try {
             LeagueRecord record = new LeagueRecord(
@@ -68,4 +87,36 @@ public class TeamStanding {
             return null;
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(divisionId);
+        parcel.writeString(divisionName);
+        parcel.writeParcelable(teamRecord, flags);
+        parcel.writeInt(teamId);
+        parcel.writeString(teamName);
+        parcel.writeInt(goalsAgainst);
+        parcel.writeInt(goalsScored);
+        parcel.writeInt(points);
+        parcel.writeInt(divisionRank);
+        parcel.writeInt(conferenceRank);
+        parcel.writeInt(wildCardRank);
+        parcel.writeInt(row);
+        parcel.writeInt(gamesPlayed);
+    }
+
+    public static final Parcelable.Creator<TeamStanding> CREATOR = new Parcelable.Creator<TeamStanding>() {
+        public TeamStanding createFromParcel(Parcel in) {
+            return new TeamStanding(in);
+        }
+
+        public TeamStanding[] newArray(int size) {
+            return new TeamStanding[size];
+        }
+    };
 }
