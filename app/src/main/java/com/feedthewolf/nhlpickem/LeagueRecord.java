@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by nmoccia on 1/4/2017.
  */
 
-class LeagueRecord implements Parcelable {
+public class LeagueRecord implements Parcelable {
     private int wins;
     private int losses;
     private int ot;
@@ -53,15 +53,15 @@ class LeagueRecord implements Parcelable {
     }
 
     //region Getters
-    int getWins() {
+    public int getWins() {
         return wins;
     }
 
-    int getLosses() {
+    public int getLosses() {
         return losses;
     }
 
-    int getOt() {
+    public int getOt() {
         return ot;
     }
     //endregion

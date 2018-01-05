@@ -22,7 +22,7 @@ public class MyTeamStandingRecyclerViewAdapter extends RecyclerView.Adapter<MyTe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_teamstanding, parent, false);
+                .inflate(R.layout.fragment_teamstanding_test, parent, false);
         return new ViewHolder(view);
     }
 
