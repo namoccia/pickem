@@ -66,6 +66,7 @@ public class TeamStandingFragment extends Fragment {
                 RecyclerView recyclerView = (RecyclerView) view;
 
                 recyclerView.setAdapter(new DivisionStandingsRecyclerViewAdapter(mTeamStandingList));
+                view.setFocusable(false);
 
                 return view;
             }
@@ -78,6 +79,7 @@ public class TeamStandingFragment extends Fragment {
             }
             recyclerView.setAdapter(new MyTeamStandingRecyclerViewAdapter(mTeamStandingList));
         }
+        view.setFocusable(false);
 
         return view;
     }
