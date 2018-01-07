@@ -211,11 +211,13 @@ public class StandingsActivity extends AppCompatActivity {
                 for(int i=0; i<recordsArray.length(); i++) {
                     int divId = recordsArray.getJSONObject(i).getJSONObject("division").getInt("id");
                     String divName = recordsArray.getJSONObject(i).getJSONObject("division").getString("name");
+                    int conId = recordsArray.getJSONObject(i).getJSONObject("conference").getInt("id");
+                    String conName = recordsArray.getJSONObject(i).getJSONObject("conference").getString("name");
 
                     JSONArray teamRecordsArray = recordsArray.getJSONObject(i).getJSONArray("teamRecords");
                     for(int k=0; k<teamRecordsArray.length(); k++) {
                         TeamStanding newStanding;
-                        newStanding = TeamStanding.teamStandingFromJSON(divId, divName, teamRecordsArray.getJSONObject(k));
+                        newStanding = TeamStanding.teamStandingFromJSON(divId, divName, conId, conName, teamRecordsArray.getJSONObject(k));
 
                         teamStandingArrayList.add(newStanding);
                     }

@@ -13,6 +13,8 @@ import org.json.JSONObject;
 public class TeamStanding implements Parcelable{
     public int divisionId;
     public String divisionName;
+    public int conferenceId;
+    public String conferenceName;
     public LeagueRecord teamRecord;
     public int teamId;
     public String teamName;
@@ -26,11 +28,13 @@ public class TeamStanding implements Parcelable{
     public int row;
     public int gamesPlayed;
 
-    public TeamStanding(int divisionId, String divisionName, LeagueRecord teamRecord, int teamId, String teamName,
+    public TeamStanding(int divisionId, String divisionName, int conferenceId, String conferenceName, LeagueRecord teamRecord, int teamId, String teamName,
                         int goalsAgainst, int goalsScored, int points, int divisionRank, int conferenceRank,
                         int leagueRank, int wildCardRank, int row, int gamesPlayed) {
         this.divisionId = divisionId;
         this.divisionName = divisionName;
+        this.conferenceId = conferenceId;
+        this.conferenceName = conferenceName;
         this.teamRecord = teamRecord;
         this.teamId = teamId;
         this.teamName = teamName;
@@ -48,6 +52,8 @@ public class TeamStanding implements Parcelable{
     public TeamStanding(Parcel in) {
         this.divisionId = in.readInt();
         this.divisionName = in.readString();
+        this.conferenceId = in.readInt();
+        this.conferenceName = in.readString();
         this.teamRecord = in.readParcelable(LeagueRecord.class.getClassLoader());
         this.teamId = in.readInt();
         this.teamName = in.readString();
@@ -62,7 +68,7 @@ public class TeamStanding implements Parcelable{
         this.gamesPlayed = in.readInt();
     }
 
-    static TeamStanding teamStandingFromJSON(int divId, String divName, JSONObject json) {
+    static TeamStanding teamStandingFromJSON(int divId, String divName, int conId, String conName, JSONObject json) {
         try {
             LeagueRecord record = new LeagueRecord(
                     json.getJSONObject("leagueRecord").getInt("wins"),
@@ -81,7 +87,7 @@ public class TeamStanding implements Parcelable{
             int row = json.getInt("row");
             int gp = json.getInt("gamesPlayed");
 
-            return new TeamStanding(divId, divName, record, teamId, teamName, ga, gf, points, divRank, confRank, leagueRank, wcRank, row, gp);
+            return new TeamStanding(divId, divName, conId, conName, record, teamId, teamName, ga, gf, points, divRank, confRank, leagueRank, wcRank, row, gp);
         } catch (Exception e) {
             Log.e("teamStandingFromJSON", "Error parsing standings data " + e.toString());
             return null;
@@ -97,6 +103,8 @@ public class TeamStanding implements Parcelable{
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(divisionId);
         parcel.writeString(divisionName);
+        parcel.writeInt(conferenceId);
+        parcel.writeString(conferenceName);
         parcel.writeParcelable(teamRecord, flags);
         parcel.writeInt(teamId);
         parcel.writeString(teamName);

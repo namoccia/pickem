@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+            android:id="@+id/metro_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            tools:layout_editor_absoluteY="6dp">
+
+            <TextView
+                android:id="@+id/metroHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="TextView"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/gamesPlayedHeading1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="GP" />
+
+            <TextView
+                android:id="@+id/winsHeading1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="W" />
+
+            <TextView
+                android:id="@+id/lossesHeading1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="L" />
+
+            <TextView
+                android:id="@+id/otHeading1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="OT" />
+
+            <TextView
+                android:id="@+id/pointsHeading1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="PTS" />
+
+        </LinearLayout>
+
+            <ListView
+                android:id="@+id/metro_leaders_list"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/atlantic_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/atlanticHeading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/atlantic_leaders_list"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/wildcard_heading_east"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/wildCardHeadingEast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/wildcard_east_list"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/no_playoffs_heading_east"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/noPlayoffsHeadingEast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/no_playoffs_east_list"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/central_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/centralHeading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/central_leaders_list"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/pacific_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/pacificHeading"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/pacific_leaders_list"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/wildcard_heading_west"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/wildCardHeadingWest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/wildcard_west_list"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <LinearLayout
+                android:id="@+id/no_playoffs_heading_west"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                tools:layout_editor_absoluteY="6dp">
+
+                <TextView
+                    android:id="@+id/noPlayoffsHeadingWest"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gamesPlayedHeading8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="GP" />
+
+                <TextView
+                    android:id="@+id/winsHeading8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="W" />
+
+                <TextView
+                    android:id="@+id/lossesHeading8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L" />
+
+                <TextView
+                    android:id="@+id/otHeading8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="OT" />
+
+                <TextView
+                    android:id="@+id/pointsHeading8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PTS" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/no_playoffs_west_list"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:listSelector="@android:color/transparent"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        </LinearLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="0dp" />
+
+    </android.support.constraint.ConstraintLayout>
+

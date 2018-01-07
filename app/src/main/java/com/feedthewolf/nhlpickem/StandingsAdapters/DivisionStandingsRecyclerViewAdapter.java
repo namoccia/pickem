@@ -1,6 +1,5 @@
 package com.feedthewolf.nhlpickem.StandingsAdapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import com.feedthewolf.nhlpickem.R;
 import com.feedthewolf.nhlpickem.TeamStanding;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 /**
  * Created by Nick on 1/5/2018.
