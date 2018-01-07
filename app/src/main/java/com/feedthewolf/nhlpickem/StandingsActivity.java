@@ -2,6 +2,7 @@ package com.feedthewolf.nhlpickem;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -69,6 +71,18 @@ public class StandingsActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout) {
             @Override
             public void onPageSelected(int position) {
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
+                switch (position) {
+                    case 0:
+                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1100, getResources().getDisplayMetrics());
+                        mViewPager.setLayoutParams(params);
+                        break;
+                    case 1:
+                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 950, getResources().getDisplayMetrics());
+                        mViewPager.setLayoutParams(params);
+                        break;
+                }
+
                 mSectionsPagerAdapter.notifyDataSetChanged();
             }
         });
@@ -140,7 +154,8 @@ public class StandingsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+
+
             return TeamStandingFragment.newInstance(mStandingsList, position);
         }
 
