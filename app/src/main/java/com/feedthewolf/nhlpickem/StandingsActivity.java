@@ -74,11 +74,11 @@ public class StandingsActivity extends AppCompatActivity {
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
                 switch (position) {
                     case 0:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1100, getResources().getDisplayMetrics());
+                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1175, getResources().getDisplayMetrics());
                         mViewPager.setLayoutParams(params);
                         break;
                     case 1:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 950, getResources().getDisplayMetrics());
+                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1000, getResources().getDisplayMetrics());
                         mViewPager.setLayoutParams(params);
                         break;
                 }
@@ -154,8 +154,6 @@ public class StandingsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-
-
             return TeamStandingFragment.newInstance(mStandingsList, position);
         }
 
@@ -169,9 +167,6 @@ public class StandingsActivity extends AppCompatActivity {
         @Override
         public int getItemPosition(Object object) {
             if (mStandingsList != null && ((TeamStandingFragment)object).mTeamStandingList == null) {
-                // Create a new method notifyUpdate() in your fragment
-                // it will get call when you invoke
-                // notifyDatasetChaged();
                 return POSITION_NONE;
             }
             //don't return POSITION_NONE, avoid fragment recreation.

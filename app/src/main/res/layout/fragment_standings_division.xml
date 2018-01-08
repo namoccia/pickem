@@ -10,6 +10,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/easternConfHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Eastern Conference"
+                android:textSize="21sp"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:id="@+id/division_heading_1"
                 android:layout_width="match_parent"
@@ -159,6 +170,16 @@
                 android:focusable="false"
                 android:listSelector="@android:color/transparent"/>
 
+            <TextView
+                android:id="@+id/westernConfHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Western Conference"
+                android:textSize="21sp"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:id="@+id/division_heading_3"
                 android:layout_width="match_parent"
@@ -167,7 +188,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 android:weightSum="10"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
