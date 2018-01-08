@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.feedthewolf.nhlpickem.R;
 import com.feedthewolf.nhlpickem.TeamStanding;
@@ -69,7 +68,6 @@ public class ConferenceStandingsRecyclerViewAdapter extends RecyclerView.Adapter
                 retVal.add(standing);
             }
         }
-        //Collections.sort(retVal, TeamStanding.)
         Collections.sort(retVal, TeamStanding.ConferenceRankComparator);
 
         return retVal;

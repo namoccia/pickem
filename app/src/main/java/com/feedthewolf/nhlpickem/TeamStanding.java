@@ -140,4 +140,15 @@ public class TeamStanding implements Parcelable{
             return ConfRank1-ConfRank2;
         }
     };
+
+    public static Comparator<TeamStanding> LeagueRankComparator = new Comparator<TeamStanding>() {
+        @Override
+        public int compare(TeamStanding t1, TeamStanding t2) {
+            int leagueRank1 = t1.leagueRank;
+            int leagueRank2 = t2.leagueRank;
+
+            //ascending order
+            return leagueRank1-leagueRank2;
+        }
+    };
 }

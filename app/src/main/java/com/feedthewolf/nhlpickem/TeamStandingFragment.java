@@ -9,17 +9,15 @@ import android.view.ViewGroup;
 
 import com.feedthewolf.nhlpickem.StandingsAdapters.ConferenceStandingsRecyclerViewAdapter;
 import com.feedthewolf.nhlpickem.StandingsAdapters.DivisionStandingsRecyclerViewAdapter;
+import com.feedthewolf.nhlpickem.StandingsAdapters.LeagueStandingsRecyclerViewAdapter;
 import com.feedthewolf.nhlpickem.StandingsAdapters.WildcardStandingsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
 public class TeamStandingFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_STANDINGS_LIST = "standings-list";
     private static final String ARG_POSITION = "position";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
     public ArrayList<TeamStanding> mTeamStandingList;
     public int mStandingsType;
 
@@ -30,8 +28,6 @@ public class TeamStandingFragment extends Fragment {
     public TeamStandingFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static TeamStandingFragment newInstance(ArrayList<TeamStanding> standingsList, int position) {
         TeamStandingFragment fragment = new TeamStandingFragment();
         Bundle args = new Bundle();
@@ -74,8 +70,14 @@ public class TeamStandingFragment extends Fragment {
                     recyclerView.setAdapter(new ConferenceStandingsRecyclerViewAdapter(mTeamStandingList));
                     view.setFocusable(false);
                     return view;
+                case 3:
+                    recyclerView.setAdapter(new LeagueStandingsRecyclerViewAdapter(mTeamStandingList));
+                    view.setFocusable(false);
+                    return view;
                 default:
-                    recyclerView.setAdapter(new MyTeamStandingRecyclerViewAdapter(mTeamStandingList));
+                    recyclerView.setAdapter(new LeagueStandingsRecyclerViewAdapter(mTeamStandingList));
+                    view.setFocusable(false);
+                    return view;
             }
         }
         view.setFocusable(false);

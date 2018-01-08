@@ -85,6 +85,14 @@ public class StandingsActivity extends AppCompatActivity {
                         params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 925, getResources().getDisplayMetrics());
                         mViewPager.setLayoutParams(params);
                         break;
+                    case 3:
+                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 850, getResources().getDisplayMetrics());
+                        mViewPager.setLayoutParams(params);
+                        break;
+                    default:
+                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1175, getResources().getDisplayMetrics());
+                        mViewPager.setLayoutParams(params);
+                        break;
                 }
 
                 mSectionsPagerAdapter.notifyDataSetChanged();
