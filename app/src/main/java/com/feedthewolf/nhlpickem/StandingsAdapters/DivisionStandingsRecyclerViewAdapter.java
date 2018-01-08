@@ -18,19 +18,16 @@ import java.util.ArrayList;
 
 public class DivisionStandingsRecyclerViewAdapter extends RecyclerView.Adapter<DivisionStandingsRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<TeamStanding> mDataSource;
     private ArrayList<TeamStanding> mMetroDivision;
     private ArrayList<TeamStanding> mAtlanticDivision;
     private ArrayList<TeamStanding> mCentralDivision;
     private ArrayList<TeamStanding> mPacificDivision;
 
     public DivisionStandingsRecyclerViewAdapter(ArrayList<TeamStanding> items) {
-        mDataSource = items;
-
-        mMetroDivision = getListByDivision(mDataSource, "Metropolitan");
-        mAtlanticDivision = getListByDivision(mDataSource, "Atlantic");
-        mCentralDivision = getListByDivision(mDataSource, "Central");
-        mPacificDivision = getListByDivision(mDataSource, "Pacific");
+        mMetroDivision = getListByDivision(items, "Metropolitan");
+        mAtlanticDivision = getListByDivision(items, "Atlantic");
+        mCentralDivision = getListByDivision(items, "Central");
+        mPacificDivision = getListByDivision(items, "Pacific");
     }
 
     @Override
@@ -70,15 +67,13 @@ public class DivisionStandingsRecyclerViewAdapter extends RecyclerView.Adapter<D
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mDivisionHeaderTextView1;
-        public final TextView mDivisionHeaderTextView2;
-        public final TextView mDivisionHeaderTextView3;
-        public final TextView mDivisionHeaderTextView4;
+        private final TextView mDivisionHeaderTextView1;
+        private final TextView mDivisionHeaderTextView2;
+        private final TextView mDivisionHeaderTextView3;
+        private final TextView mDivisionHeaderTextView4;
 
-        public ViewHolder(View view) {
+        private ViewHolder(View view) {
             super(view);
-            mView = view;
             mDivisionHeaderTextView1 = (TextView) view.findViewById(R.id.divNameHeading1);
             mDivisionHeaderTextView2 = (TextView) view.findViewById(R.id.divNameHeading2);
             mDivisionHeaderTextView3 = (TextView) view.findViewById(R.id.divNameHeading3);
@@ -86,7 +81,7 @@ public class DivisionStandingsRecyclerViewAdapter extends RecyclerView.Adapter<D
         }
     }
 
-    ArrayList<TeamStanding> getListByDivision(ArrayList<TeamStanding> originalList, String divisionName) {
+    private ArrayList<TeamStanding> getListByDivision(ArrayList<TeamStanding> originalList, String divisionName) {
         ArrayList<TeamStanding> retVal = new ArrayList<TeamStanding>();
 
         for (TeamStanding standing : originalList) {

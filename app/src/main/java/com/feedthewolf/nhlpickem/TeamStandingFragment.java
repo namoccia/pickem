@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.feedthewolf.nhlpickem.StandingsAdapters.ConferenceStandingsRecyclerViewAdapter;
 import com.feedthewolf.nhlpickem.StandingsAdapters.DivisionStandingsRecyclerViewAdapter;
 import com.feedthewolf.nhlpickem.StandingsAdapters.WildcardStandingsRecyclerViewAdapter;
 
@@ -67,6 +68,10 @@ public class TeamStandingFragment extends Fragment {
                     return view;
                 case 1:
                     recyclerView.setAdapter(new DivisionStandingsRecyclerViewAdapter(mTeamStandingList));
+                    view.setFocusable(false);
+                    return view;
+                case 2:
+                    recyclerView.setAdapter(new ConferenceStandingsRecyclerViewAdapter(mTeamStandingList));
                     view.setFocusable(false);
                     return view;
                 default:

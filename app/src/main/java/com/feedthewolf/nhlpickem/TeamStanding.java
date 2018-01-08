@@ -6,6 +6,8 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.util.Comparator;
+
 /**
  * Created by Nick on 12/16/2017.
  */
@@ -125,6 +127,17 @@ public class TeamStanding implements Parcelable{
 
         public TeamStanding[] newArray(int size) {
             return new TeamStanding[size];
+        }
+    };
+
+    public static Comparator<TeamStanding> ConferenceRankComparator = new Comparator<TeamStanding>() {
+        @Override
+        public int compare(TeamStanding t1, TeamStanding t2) {
+            int ConfRank1 = t1.conferenceRank;
+            int ConfRank2 = t2.conferenceRank;
+
+            //ascending order
+            return ConfRank1-ConfRank2;
         }
     };
 }

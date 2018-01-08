@@ -40,7 +40,7 @@
                     android:id="@+id/wildCardTab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wildcard" />
+                    android:text="@string/wildCardTab" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/divisionTab"

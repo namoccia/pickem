@@ -10,6 +10,21 @@
     <string name="title_activity_stats">Stats</string>
     <string name="no_game_data">There is no game data available for this date.</string>
 
+    <!-- Strings related to Standings page -->
+    <string name="metroDiv">Metropolitan</string>
+    <string name="atlanticDiv">Atlantic</string>
+    <string name="centralDiv">Central</string>
+    <string name="pacificDiv">Pacific</string>
+    <string name="wildCard">Wild Card</string>
+    <string name="noPlayoffs">No Playoffs</string>
+    <string name="easternConf">Eastern Conference</string>
+    <string name="westernConf">Western Conference</string>
+    <string name="gp">GP</string>
+    <string name="w">W</string>
+    <string name="l">L</string>
+    <string name="ot">OT</string>
+    <string name="pts">PTS</string>
+
     <!-- Strings related to Stats page -->
     <string name="totalPicks">Total picks:</string>
     <string name="correctPicks">Correct picks:</string>
@@ -109,7 +124,7 @@
     <!-- TODO: remove this placeholder text -->
     <string name="pick_reminder_notification_text">Be sure to get your picks in for today\'s games!
     </string>
-    <string name="wildcard">Wildcard</string>
+    <string name="wildCardTab">Wildcard</string>
     <string name="division">Division</string>
     <string name="conference">Conf</string>
     <string name="league">League</string>

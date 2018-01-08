@@ -16,7 +16,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Eastern Conference"
+                android:text="@string/easternConf"
                 android:textSize="21sp"
                 android:textAlignment="center"
                 android:textStyle="bold" />
@@ -41,42 +41,42 @@
                     android:layout_weight="5"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="TextView" />
+                    android:text="@string/metroDiv" />
 
                 <TextView
                     android:id="@+id/gamesPlayedHeading1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="GP" />
+                    android:text="@string/gp" />
 
                 <TextView
                     android:id="@+id/winsHeading1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="W" />
+                    android:text="@string/w" />
 
                 <TextView
                     android:id="@+id/lossesHeading1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="L" />
+                    android:text="@string/l" />
 
                 <TextView
                     android:id="@+id/otHeading1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="OT" />
+                    android:text="@string/ot" />
 
                 <TextView
                     android:id="@+id/pointsHeading1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PTS" />
+                    android:text="@string/pts" />
 
             </LinearLayout>
 
@@ -116,42 +116,42 @@
                     android:layout_weight="5"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="TextView" />
+                    android:text="@string/atlanticDiv" />
 
                 <TextView
                     android:id="@+id/gamesPlayedHeading2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="GP" />
+                    android:text="@string/gp" />
 
                 <TextView
                     android:id="@+id/winsHeading2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="W" />
+                    android:text="@string/w" />
 
                 <TextView
                     android:id="@+id/lossesHeading2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="L" />
+                    android:text="@string/l" />
 
                 <TextView
                     android:id="@+id/otHeading2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="OT" />
+                    android:text="@string/ot" />
 
                 <TextView
                     android:id="@+id/pointsHeading2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PTS" />
+                    android:text="@string/pts" />
 
             </LinearLayout>
 
@@ -175,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Western Conference"
+                android:text="@string/westernConf"
                 android:textSize="21sp"
                 android:textAlignment="center"
                 android:textStyle="bold" />
@@ -201,42 +201,42 @@
                     android:layout_weight="5"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="TextView" />
+                    android:text="@string/centralDiv" />
 
                 <TextView
                     android:id="@+id/gamesPlayedHeading3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="GP" />
+                    android:text="@string/gp" />
 
                 <TextView
                     android:id="@+id/winsHeading3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="W" />
+                    android:text="@string/w" />
 
                 <TextView
                     android:id="@+id/lossesHeading3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="L" />
+                    android:text="@string/l" />
 
                 <TextView
                     android:id="@+id/otHeading3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="OT" />
+                    android:text="@string/ot" />
 
                 <TextView
                     android:id="@+id/pointsHeading3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PTS" />
+                    android:text="@string/pts" />
 
             </LinearLayout>
 
@@ -276,42 +276,42 @@
                     android:layout_weight="5"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="TextView" />
+                    android:text="@string/pacificDiv" />
 
                 <TextView
                     android:id="@+id/gamesPlayedHeading4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="GP" />
+                    android:text="@string/gp" />
 
                 <TextView
                     android:id="@+id/winsHeading4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="W" />
+                    android:text="@string/w" />
 
                 <TextView
                     android:id="@+id/lossesHeading4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="L" />
+                    android:text="@string/l" />
 
                 <TextView
                     android:id="@+id/otHeading4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="OT" />
+                    android:text="@string/ot" />
 
                 <TextView
                     android:id="@+id/pointsHeading4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="PTS" />
+                    android:text="@string/pts" />
 
             </LinearLayout>
 

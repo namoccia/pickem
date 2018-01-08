@@ -17,14 +17,12 @@ import java.util.ArrayList;
  */
 
 public class StandingsListAdapter extends BaseAdapter {
-    private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<TeamStanding> mDataSource;
 
     public StandingsListAdapter(Context context, ArrayList<TeamStanding> items) {
-        mContext = context;
         mDataSource = items;
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
