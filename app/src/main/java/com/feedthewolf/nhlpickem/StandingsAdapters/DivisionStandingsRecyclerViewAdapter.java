@@ -50,6 +50,12 @@ public class DivisionStandingsRecyclerViewAdapter extends RecyclerView.Adapter<D
         mDivisionThreeListView.setAdapter(centralStandingsListAdapter);
         mDivisionFourListView.setAdapter(pacificStandingsListAdapter);
 
+        mDivisionOneListView.setFocusable(false);
+        mDivisionTwoListView.setFocusable(false);
+        mDivisionThreeListView.setFocusable(false);
+        mDivisionFourListView.setFocusable(false);
+        testView.setFocusable(false);
+
         return new ViewHolder(testView);
     }
 

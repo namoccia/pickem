@@ -36,6 +36,9 @@ public class LeagueStandingsRecyclerViewAdapter extends RecyclerView.Adapter<Lea
 
         mLeagueStandingsListView.setAdapter(leagueStandingsListAdapter);
 
+        mLeagueStandingsListView.setFocusable(false);
+        testView.setFocusable(false);
+
         return new ViewHolder(testView);
     }
 

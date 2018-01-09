@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.feedthewolf.nhlpickem"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 3
         versionName "1.03"

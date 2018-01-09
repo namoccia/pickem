@@ -82,6 +82,16 @@ public class WildcardStandingsRecyclerViewAdapter extends RecyclerView.Adapter<W
         mEastNoPlayoffsListView.setAdapter(eastNoPlayoffsListAdapter);
         mWestNoPlayoffsListView.setAdapter(westNoPlayoffsListAdapter);
 
+        mMetroLeadersListView.setFocusable(false);
+        mAtlanticLeadersListView.setFocusable(false);
+        mCentralLeadersListView.setFocusable(false);
+        mPacificLeadersListView.setFocusable(false);
+        mEastWildCardListView.setFocusable(false);
+        mWestWildCardListView.setFocusable(false);
+        mEastNoPlayoffsListView.setFocusable(false);
+        mWestNoPlayoffsListView.setFocusable(false);
+        parentFragment.setFocusable(false);
+
         return new ViewHolder(parentFragment);
     }
 

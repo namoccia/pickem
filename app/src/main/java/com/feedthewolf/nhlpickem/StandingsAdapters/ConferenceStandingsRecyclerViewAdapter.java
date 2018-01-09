@@ -40,6 +40,10 @@ public class ConferenceStandingsRecyclerViewAdapter extends RecyclerView.Adapter
         mEasternListView.setAdapter(eastStandingsListAdapter);
         mWesternListView.setAdapter(westStandingsListAdapter);
 
+        mEasternListView.setFocusable(false);
+        mWesternListView.setFocusable(false);
+        testView.setFocusable(false);
+
         return new ViewHolder(testView);
     }
 

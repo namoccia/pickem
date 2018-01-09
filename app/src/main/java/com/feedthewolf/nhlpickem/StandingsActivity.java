@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -72,28 +73,8 @@ public class StandingsActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
-                switch (position) {
-                    case 0:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1175, getResources().getDisplayMetrics());
-                        mViewPager.setLayoutParams(params);
-                        break;
-                    case 1:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1000, getResources().getDisplayMetrics());
-                        mViewPager.setLayoutParams(params);
-                        break;
-                    case 2:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 925, getResources().getDisplayMetrics());
-                        mViewPager.setLayoutParams(params);
-                        break;
-                    case 3:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 850, getResources().getDisplayMetrics());
-                        mViewPager.setLayoutParams(params);
-                        break;
-                    default:
-                        params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1175, getResources().getDisplayMetrics());
-                        mViewPager.setLayoutParams(params);
-                        break;
-                }
+                params.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, setNeededPageHeight(position), getResources().getDisplayMetrics());
+                mViewPager.setLayoutParams(params);
 
                 mSectionsPagerAdapter.notifyDataSetChanged();
             }
@@ -108,7 +89,6 @@ public class StandingsActivity extends AppCompatActivity {
 
         refreshStandings();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,6 +124,61 @@ public class StandingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private int setNeededPageHeight(int position) {
+        int retVal;
+        int densityDpi = getResources().getDisplayMetrics().densityDpi;
+
+        switch (position) {
+            case 0:
+                retVal = 1175;
+                break;
+            case 1:
+                retVal = 1000;
+                break;
+            case 2:
+                retVal = 925;
+                break;
+            case 3:
+                retVal = 850;
+                break;
+            default:
+                retVal = 1175;
+                break;
+        }
+
+        if (densityDpi <= 120) {
+
+        }
+
+        if (120 < densityDpi && densityDpi <= 160) {
+
+        }
+
+        if (160 < densityDpi && densityDpi <= 240) {
+            if (position == 0) {
+                retVal += 55;
+            }
+            retVal += 35;
+        }
+
+        if (240 < densityDpi && densityDpi <= 320) {
+
+        }
+
+        if (320 < densityDpi && densityDpi <= 480) {
+            retVal += 20;
+            if (position == 0) {
+                retVal += 15;
+            }
+        }
+
+        if (480 < densityDpi && densityDpi <= 640) {
+
+        }
+
+        return retVal;
     }
 
     private void refreshStandings() {
