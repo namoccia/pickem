@@ -65,4 +65,7 @@ Future and Desired Features
 - Swipe left and right from game to game within Game Details Page
 - Improved resolution support
 - Multiplayer aspect, user can see other user's pick scores for the season and individual games
+- Settings tab
+- Setting for showing or not showing NHL logos
+- Matchup | Plays | Goals | Boxscore (tabbed view on game)
 - Other stuff to be added here as it's thought of
