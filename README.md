@@ -3,12 +3,15 @@ Synopsis
 
 This repository is for a pet NHL Pick 'Em Android app. The purpose of this app is ultimately for me to learn Android development and have a little fun. At some point I will release the app to the app store when I believe I have met a minimum viable product.
 
+App is currently in a closed Alpha state. If you would like an invite to the Alpha to take a look at the app, please let me know at nicolas.a.moccia@gmail.com. I'd love to have any and all feedback you may have!
+
 Technology used
 -
 
 - Android Studio (Currently 3.0)
 - Local builds to personal Pixel phone
 - Local builds to various emulated phones 
+- SQLite to track machine-local picks and pick stats
 - NHL Stats API (example call: https://statsapi.web.nhl.com/api/v1/schedule?date=2017-10-26)
 
 A bit about the NHL API
