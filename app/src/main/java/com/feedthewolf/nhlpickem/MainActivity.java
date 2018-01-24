@@ -411,7 +411,7 @@ public class MainActivity extends AppCompatActivity
                 ArrayList<Game> gameList = new ArrayList<>();
                 for(int currentGame = 0; currentGame < numberOfGames; currentGame++) {
                     JSONObject currentGameJSON = jObj.getJSONArray("dates").getJSONObject(0).getJSONArray("games").getJSONObject(currentGame);
-                    gameList.add(Game.gameFromJSON(currentGameJSON));
+                    gameList.add(ApiParser.gameFromJSON(currentGameJSON));
                 }
 
                 addGamesToList(gameList);

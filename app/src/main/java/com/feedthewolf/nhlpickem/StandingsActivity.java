@@ -274,7 +274,7 @@ public class StandingsActivity extends AppCompatActivity {
                     JSONArray teamRecordsArray = recordsArray.getJSONObject(i).getJSONArray("teamRecords");
                     for(int k=0; k<teamRecordsArray.length(); k++) {
                         TeamStanding newStanding;
-                        newStanding = TeamStanding.teamStandingFromJSON(divId, divName, conId, conName, teamRecordsArray.getJSONObject(k));
+                        newStanding = ApiParser.teamStandingFromJSON(divId, divName, conId, conName, teamRecordsArray.getJSONObject(k));
 
                         teamStandingArrayList.add(newStanding);
                     }

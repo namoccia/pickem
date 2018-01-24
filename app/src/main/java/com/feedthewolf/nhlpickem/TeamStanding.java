@@ -2,10 +2,6 @@ package com.feedthewolf.nhlpickem;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
-
-import org.json.JSONObject;
-
 import java.util.Comparator;
 
 /**
@@ -68,32 +64,6 @@ public class TeamStanding implements Parcelable{
         this.wildCardRank = in.readInt();
         this.row = in.readInt();
         this.gamesPlayed = in.readInt();
-    }
-
-    static TeamStanding teamStandingFromJSON(int divId, String divName, int conId, String conName, JSONObject json) {
-        try {
-            LeagueRecord record = new LeagueRecord(
-                    json.getJSONObject("leagueRecord").getInt("wins"),
-                    json.getJSONObject("leagueRecord").getInt("losses"),
-                    json.getJSONObject("leagueRecord").getInt("ot")
-            );
-            int teamId = json.getJSONObject("team").getInt("id");
-            String teamName = json.getJSONObject("team").getString("name");
-            int ga = json.getInt("goalsAgainst");
-            int gf = json.getInt("goalsScored");
-            int points = json.getInt("points");
-            int divRank = Integer.parseInt(json.getString("divisionRank"));
-            int confRank = Integer.parseInt(json.getString("conferenceRank"));
-            int leagueRank = Integer.parseInt(json.getString("leagueRank"));
-            int wcRank = Integer.parseInt(json.getString("wildCardRank"));
-            int row = json.getInt("row");
-            int gp = json.getInt("gamesPlayed");
-
-            return new TeamStanding(divId, divName, conId, conName, record, teamId, teamName, ga, gf, points, divRank, confRank, leagueRank, wcRank, row, gp);
-        } catch (Exception e) {
-            Log.e("teamStandingFromJSON", "Error parsing standings data " + e.toString());
-            return null;
-        }
     }
 
     @Override
