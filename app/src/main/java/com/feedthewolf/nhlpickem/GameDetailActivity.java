@@ -318,6 +318,9 @@ public class GameDetailActivity extends AppCompatActivity {
             //Do something with the JSON string
 
             try {
+                /*
+                Todo: GameDetailActivity - extract the parsing portion of this into the ApiParser class
+                 */
                 JSONObject jObj = new JSONObject(result);
                 //Toast.makeText(MainActivity.this, "From API: " + jObj.getJSONArray("teams").getJSONObject(0).getString("name"), Toast.LENGTH_LONG).show();
                 int numberOfGames = jObj.getInt("totalGames");

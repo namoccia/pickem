@@ -257,6 +257,9 @@ public class StandingsActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             try {
+                /*
+                Todo: StandingsActivity - extract the parsing portion of this into the ApiParser class
+                 */
                 JSONObject jObj = new JSONObject(result);
                 JSONArray recordsArray = jObj.getJSONArray("records");
 

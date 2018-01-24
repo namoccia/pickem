@@ -395,9 +395,14 @@ public class MainActivity extends AppCompatActivity
             //Do something with the JSON string
 
             try {
+                /*
+                Todo: MainActivity - extract the parsing portion of this into the ApiParser class
+                 */
                 JSONObject jObj = new JSONObject(result);
-                //Toast.makeText(MainActivity.this, "From API: " + jObj.getJSONArray("teams").getJSONObject(0).getString("name"), Toast.LENGTH_LONG).show();
                 int numberOfGames = jObj.getInt("totalGames");
+                /*
+                Todo: MainActivity - create some sort of helper class for handling SharedPreferences
+                 */
                 if( mSharedPreferences.getString(getString(R.string.preference_today_date), "null").equalsIgnoreCase(mApiDate)) {
                     SharedPreferences.Editor editor = mSharedPreferences.edit();
                     if (numberOfGames == 0)
