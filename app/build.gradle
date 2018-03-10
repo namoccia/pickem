@@ -7,8 +7,8 @@ android {
         applicationId "com.feedthewolf.nhlpickem"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.03"
+        versionCode 5
+        versionName "1.04"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
