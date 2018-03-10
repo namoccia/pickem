@@ -13,6 +13,7 @@ import com.feedthewolf.nhlpickem.TeamStanding;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Nick on 1/5/2018.
@@ -185,6 +186,7 @@ public class WildcardStandingsRecyclerViewAdapter extends RecyclerView.Adapter<W
                 retVal.add(standing);
             }
         }
+        Collections.sort(retVal, TeamStanding.ConferenceRankComparator);
 
         return retVal;
     }
