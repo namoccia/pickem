@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="9"
+    android:weightSum="7"
     android:id="@+id/game_list_root_layout">
 
     <LinearLayout
@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/game_list_away_image"
-            android:layout_width="50dp"
+            android:layout_width="45dp"
             android:layout_height="24dp"
             android:scaleType="centerInside"
             tools:src="@mipmap/ic_launcher"
@@ -27,7 +27,7 @@
 
         <ImageView
             android:id="@+id/game_list_home_image"
-            android:layout_width="50dp"
+            android:layout_width="45dp"
             android:layout_height="24dp"
             android:layout_marginTop="5dp"
             android:scaleType="centerInside"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical|start"
         android:orientation="vertical"
-        android:layout_weight="6">
+        android:layout_weight="4">
 
         <TextView
             android:id="@+id/game_list_away_text"
@@ -52,7 +52,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="6dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             tools:text="AwayText"
             />
 
@@ -65,7 +65,7 @@
             android:layout_marginTop="7dp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:textSize="16sp"
+            android:textSize="15sp"
             tools:text="HomeText"
             />
 
